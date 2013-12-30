@@ -168,6 +168,197 @@
 			</xsl:with-param>
 		</xsl:apply-templates>
 	</xsl:template>
+
+
+	<!-- ==================================================================== -->
+	<!-- Metadata -->
+	<!-- ==================================================================== -->
+
+	<xsl:template mode="iso19139.gvq" match="gvq:GVQ_Metadata|*[@gco:isoType='gvq:GVQ_Metadata']">
+		<xsl:param name="schema"/>
+		<xsl:param name="edit"/>
+		<xsl:param name="embedded"/>
+
+		<xsl:variable name="dataset" select="gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue='dataset' or normalize-space(gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue)=''"/>
+
+		<!-- thumbnail -->
+		<tr>
+			<td valign="middle" colspan="2">
+				<xsl:if test="$currTab='metadata' or $currTab='identification' or /root/gui/config/metadata-tab/*[name(.)=$currTab]/@flat">
+					<div style="float:left;width:70%;text-align:center;">
+						<xsl:variable name="md">
+							<xsl:apply-templates mode="brief" select="."/>
+						</xsl:variable>
+						<xsl:variable name="metadata" select="exslt:node-set($md)/*[1]"/>
+						<xsl:call-template name="thumbnail">
+							<xsl:with-param name="metadata" select="$metadata"/>
+						</xsl:call-template>
+					</div>
+				</xsl:if>
+				<xsl:if test="/root/gui/config/editor-metadata-relation">
+					<div style="float:right;">
+						<xsl:call-template name="relatedResources">
+							<xsl:with-param name="edit" select="$edit"/>
+						</xsl:call-template>
+					</div>
+				</xsl:if>
+			</td>
+		</tr>
+
+		<xsl:choose>
+
+			<!-- metadata tab -->
+			<xsl:when test="$currTab='metadata'">
+				<xsl:call-template name="iso19139Metadata">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+				</xsl:call-template>
+			</xsl:when>
+
+			<!-- identification tab -->
+			<xsl:when test="$currTab='identification'">
+				<xsl:apply-templates mode="elementEP" select="gmd:identificationInfo|geonet:child[string(@name)='identificationInfo']">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+				</xsl:apply-templates>
+			</xsl:when>
+
+			<!-- maintenance tab -->
+			<xsl:when test="$currTab='maintenance'">
+				<xsl:apply-templates mode="elementEP" select="gmd:metadataMaintenance|geonet:child[string(@name)='metadataMaintenance']">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+				</xsl:apply-templates>
+			</xsl:when>
+
+			<!-- constraints tab -->
+			<xsl:when test="$currTab='constraints'">
+				<xsl:apply-templates mode="elementEP" select="gmd:metadataConstraints|geonet:child[string(@name)='metadataConstraints']">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+				</xsl:apply-templates>
+			</xsl:when>
+
+			<!-- spatial tab -->
+			<xsl:when test="$currTab='spatial'">
+				<xsl:apply-templates mode="elementEP" select="gmd:spatialRepresentationInfo|geonet:child[string(@name)='spatialRepresentationInfo']">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+				</xsl:apply-templates>
+			</xsl:when>
+
+			<!-- refSys tab -->
+			<xsl:when test="$currTab='refSys'">
+				<xsl:apply-templates mode="elementEP" select="gmd:referenceSystemInfo|geonet:child[string(@name)='referenceSystemInfo']">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+				</xsl:apply-templates>
+			</xsl:when>
+
+			<!-- distribution tab -->
+			<xsl:when test="$currTab='distribution'">
+				<xsl:apply-templates mode="elementEP" select="gmd:distributionInfo|geonet:child[string(@name)='distributionInfo']">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+				</xsl:apply-templates>
+			</xsl:when>
+
+			<!-- embedded distribution tab -->
+			<xsl:when test="$currTab='distribution2'">
+				<xsl:apply-templates mode="elementEP" select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+				</xsl:apply-templates>
+			</xsl:when>
+
+			<!-- dataQuality tab -->
+			<xsl:when test="$currTab='dataQuality'">
+				<xsl:apply-templates mode="elementEP" select="gmd:dataQualityInfo|geonet:child[string(@name)='dataQualityInfo']">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+				</xsl:apply-templates>
+			</xsl:when>
+
+			<!-- appSchInfo tab -->
+			<xsl:when test="$currTab='appSchInfo'">
+				<xsl:apply-templates mode="elementEP" select="gmd:applicationSchemaInfo|geonet:child[string(@name)='applicationSchemaInfo']">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+				</xsl:apply-templates>
+			</xsl:when>
+
+			<!-- porCatInfo tab -->
+			<xsl:when test="$currTab='porCatInfo'">
+				<xsl:apply-templates mode="elementEP" select="gmd:portrayalCatalogueInfo|geonet:child[string(@name)='portrayalCatalogueInfo']">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+				</xsl:apply-templates>
+			</xsl:when>
+
+			<!-- contentInfo tab -->
+			<xsl:when test="$currTab='contentInfo'">
+				<xsl:apply-templates mode="elementEP" select="gmd:contentInfo|geonet:child[string(@name)='contentInfo']">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+				</xsl:apply-templates>
+			</xsl:when>
+
+			<!-- extensionInfo tab -->
+			<xsl:when test="$currTab='extensionInfo'">
+				<xsl:apply-templates mode="elementEP" select="gmd:metadataExtensionInfo|geonet:child[string(@name)='metadataExtensionInfo']">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+				</xsl:apply-templates>
+			</xsl:when>
+
+			<!-- ISOMinimum tab -->
+			<xsl:when test="$currTab='ISOMinimum'">
+				<xsl:call-template name="isotabs">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+					<xsl:with-param name="dataset" select="$dataset"/>
+					<xsl:with-param name="core" select="false()"/>
+				</xsl:call-template>
+			</xsl:when>
+
+			<!-- ISOCore tab -->
+			<xsl:when test="$currTab='ISOCore'">
+				<xsl:call-template name="isotabs">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+					<xsl:with-param name="dataset" select="$dataset"/>
+					<xsl:with-param name="core" select="true()"/>
+				</xsl:call-template>
+			</xsl:when>
+
+			<!-- ISOAll tab -->
+			<xsl:when test="$currTab='ISOAll'">
+				<xsl:call-template name="iso19139Complete">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+				</xsl:call-template>
+			</xsl:when>
+
+			<!-- INSPIRE tab -->
+			<xsl:when test="$currTab='inspire'">
+				<xsl:call-template name="inspiretabs">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+					<xsl:with-param name="dataset" select="$dataset"/>
+				</xsl:call-template>
+			</xsl:when>
+
+
+			<!-- default -->
+			<xsl:otherwise>
+				<xsl:call-template name="iso19139Simple">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+				</xsl:call-template>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
 	
 	<xsl:template name="iso19139.gvqBrief">
 		<metadata>
@@ -197,16 +388,36 @@
 	</xsl:template>
 	
 	
-	<xsl:template name="metadata-iso19139.gvq">
+	<!-- Check if any elements are overriden here in iso19139.gvq mode
+	if not fallback to iso19139 -->
+	<xsl:template name="metadata-iso19139.gvq" match="metadata-iso19139.gvq">
 		<xsl:param name="schema"/>
 		<xsl:param name="edit" select="false()"/>
 		<xsl:param name="embedded"/>
-		
-		<xsl:apply-templates mode="iso19139" select=".">
-			<xsl:with-param name="schema" select="$schema"/>
-			<xsl:with-param name="edit" select="$edit"/>
-			<xsl:with-param name="embedded" select="$embedded"/>
-		</xsl:apply-templates>
+
+		<!-- process in profile mode first -->
+		<xsl:variable name="profileElements">
+			<xsl:apply-templates mode="iso19139.gvq" select=".">
+				<xsl:with-param name="schema" select="$schema"/>
+				<xsl:with-param name="edit" select="$edit"/>
+				<xsl:with-param name="embedded" select="$embedded"/>
+			</xsl:apply-templates>
+		</xsl:variable>
+
+		<xsl:choose>
+			<!-- if we got a match in profile mode then show it -->
+			<xsl:when test="count($profileElements/*)>0">
+				<xsl:copy-of select="$profileElements"/>
+			</xsl:when>
+			<!-- otherwise process in base iso19139 mode -->
+			<xsl:otherwise>
+				<xsl:apply-templates mode="iso19139" select=".">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit" select="$edit"/>
+					<xsl:with-param name="embedded" select="$embedded"/>
+				</xsl:apply-templates>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	
 	
