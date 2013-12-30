@@ -5,11 +5,15 @@
 	xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv"
 	xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:geonet="http://www.fao.org/geonetwork" xmlns:exslt="http://exslt.org/common"
+	xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0"
+	xmlns:updated19115="http://www.geoviqua.org/19115_updates"
+	xmlns:gmd19157="http://www.geoviqua.org/gmd19157"
+	xmlns:un="http://www.uncertml.org/2.0"
 	exclude-result-prefixes="#all">
 	
 	<xsl:import href="../../iso19139/present/metadata-iso19139-fop.xsl"/>
 	
-	<xsl:template name="iso19139.xyzBrief">
+	<xsl:template name="iso19139.gvqBrief">
 		<metadata>
 			<xsl:choose>
 				<xsl:when test="geonet:info/isTemplate='s'">
@@ -26,7 +30,7 @@
 	</xsl:template>
 	
 	
-	<xsl:template name="iso19139.xyzCompleteTab">
+	<xsl:template name="iso19139.gvqCompleteTab">
 		<xsl:param name="tabLink"/>
 		<xsl:param name="schema"/>
 		
@@ -37,7 +41,7 @@
 	</xsl:template>
 	
 	
-	<xsl:template name="metadata-iso19139.xyz">
+	<xsl:template name="metadata-iso19139.gvq">
 		<xsl:param name="schema"/>
 		<xsl:param name="edit" select="false()"/>
 		<xsl:param name="embedded"/>
@@ -50,5 +54,5 @@
 	</xsl:template>
 	
 	
-	<xsl:template name="iso19139.xyz-javascript"/>
+	<xsl:template name="iso19139.gvq-javascript"/>
 </xsl:stylesheet>

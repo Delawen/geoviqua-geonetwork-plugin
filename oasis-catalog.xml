@@ -1,2 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="public"> </catalog>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="public">
+
+<!-- OASIS CATALOG FOR GEONETWORK TO REMAP VARIOUS XML IDs -->
+
+<!-- This used to be done in Java code, but with the use of these 
+	   maps you can customise this to suit yourself. 
+
+		 NOTE: all oasis catalog files are added to the XML resolver so
+		       you must not have duplicate entries - you cannot override 
+					 entries in other oasis catalogs 
+-->
+
+<!-- =============== GeoViQua maps -->
+
+	<!-- These are to map schemaLocation hints to local schemas to make sure that
+			 GeoNetwork edits and validates against a schema it knows about -->
+
+	<system systemId="http://schemas.geoviqua.org/GVQ/4.0/GeoViQua_PQM_UQM.xsd" 
+	        uri="schema.xsd"/>
+	<system systemId="http://www.uncertml.org/uncertml.xsd" 
+	        uri="schema/UncertML/uncertml.xsd"/>
+	<system systemId="http://schemas.geoviqua.org/ISO/19139/20120707_GVQ/19115_updates.xsd" 
+	        uri="schema/ISO/19139/20120707_GVQ/19115_updates.xsd"/>
+	<system systemId="http://schemas.geoviqua.org/ISO/19157/20120707_GVQ/19157_DataQuality.xsd" 
+	        uri="schema/ISO/19157/20120707_GVQ/19157_DataQuality.xsd"/>
+
+	<!-- NOTE: Other schemaLocation mappings are done in the oasis catalog for the 
+	     ISO19139 schema -->
+
+	<!-- =============== Code lists -->
+	
+	<uri name="http://schemas.geoviqua.org/GVQ/4.0/resources/Codelist/gvqCodelists.xml"
+	     uri="schema/GVQ/4.0/resources/Codelist/gvqCodelists.xml"/>
+	<uri name="http://schemas.geoviqua.org/ISO/19139/20120707_GVQ/resources/Codelist/gmxUpdatedCodelists.xml"
+	     uri="schema/ISO/19139/20120707_GVQ/resources/Codelist/gmxUpdatedCodelists.xml"/>
+	<uri name="http://schemas.geoviqua.org/ISO/19139/20130610_INSPIRE/resources/codelist/gmxINSPIRECodelists.xml"
+	     uri="schema/ISO/19139/20130610_INSPIRE/resources/codelist/gmxINSPIRECodelists.xml"/>
+	<uri name="http://schemas.geoviqua.org/ISO/19157/20120707_GVQ/resources/Codelist/gmd19157_Codelists.xml"
+	     uri="schema/ISO/19157/20120707_GVQ/resources/Codelist/gmd19157_Codelists.xml"/>
+</catalog>

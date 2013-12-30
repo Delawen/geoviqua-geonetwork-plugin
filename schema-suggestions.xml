@@ -175,18 +175,18 @@
 
 
 	<!-- Quality
-    <field name="gmd:report">
-        <suggest name="gmd:DQ_DomainConsistency"/>
+    <field name="gmd19157:report">
+        <suggest name="gmd19157:DQ_DomainConsistency"/>
     </field> -->
 
-	<field name="gmd:DQ_DomainConsistency">
-		<suggest name="gmd:result"/>
+	<field name="gmd19157:DQ_DomainConsistency">
+		<suggest name="gmd19157:result"/>
 	</field>
 
-	<field name="gmd:DQ_ConformanceResult">
-		<suggest name="gmd:specification"/>
-		<suggest name="gmd:pass"/>
-		<suggest name="gmd:explanation"/>
+	<field name="gmd19157:DQ_ConformanceResult">
+		<suggest name="gmd19157:specification"/>
+		<suggest name="gmd19157:pass"/>
+		<suggest name="gmd19157:explanation"/>
 	</field>
 
 	<!-- Date -->

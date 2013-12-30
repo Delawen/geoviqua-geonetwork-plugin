@@ -9,7 +9,7 @@
     <!-- offer just the service and data identification -->
     <field name="gmd:AbstractMD_Identification">
         <substitute name="srv:SV_ServiceIdentification"/>
-        <substitute name="gmd:MD_DataIdentification"/>
+        <substitute name="gvq:GVQ_DataIdentification"/>
     </field>
     
     <field name="gmd:MD_ScopeCode">

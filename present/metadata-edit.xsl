@@ -5,14 +5,15 @@
   xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gml="http://www.opengis.net/gml"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:geonet="http://www.fao.org/geonetwork"
   xmlns:exslt="http://exslt.org/common"
+  xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0"
   exclude-result-prefixes="gmd gco gml gts srv xlink exslt geonet">
 
   <!-- Simple views is ISO19139 -->
-  <xsl:template name="metadata-iso19139.xyzview-simple">
+  <xsl:template name="metadata-iso19139.gvqview-simple">
     <xsl:call-template name="metadata-iso19139view-simple"/>
   </xsl:template>
 
-  <xsl:template name="view-with-header-iso19139.xyz">
+  <xsl:template name="view-with-header-iso19139.gvq">
     <xsl:param name="tabs"/>
 
     <xsl:call-template name="view-with-header-iso19139">
@@ -23,16 +24,16 @@
 
 
 
-  <!-- Check if any elements are overriden here in iso19139.xyz mode
+  <!-- Check if any elements are overriden here in iso19139.gvq mode
   if not fallback to iso19139 -->
-  <xsl:template name="metadata-iso19139.xyz" match="metadata-iso19139.xyz">
+  <xsl:template name="metadata-iso19139.gvq" match="metadata-iso19139.gvq">
     <xsl:param name="schema"/>
     <xsl:param name="edit" select="false()"/>
     <xsl:param name="embedded"/>
 
     <!-- process in profile mode first -->
     <xsl:variable name="profileElements">
-      <xsl:apply-templates mode="iso19139.xyz" select=".">
+      <xsl:apply-templates mode="iso19139.gvq" select=".">
         <xsl:with-param name="schema" select="$schema"/>
         <xsl:with-param name="edit" select="$edit"/>
         <xsl:with-param name="embedded" select="$embedded"/>
@@ -60,16 +61,16 @@
 
 
   <!-- Tab configuration -->
-  <xsl:template name="iso19139.xyzCompleteTab">
+  <xsl:template name="iso19139.gvqCompleteTab">
     <xsl:param name="tabLink"/>
     <xsl:param name="schema"/>
 
     <!-- Add custom tab if a custom view is needed -->
     <!--<xsl:call-template name="mainTab">
-      <xsl:with-param name="title" select="/root/gui/schemas/*[name()=$schema]/strings/xyzTab"/>
-      <xsl:with-param name="default">xyzTabDiscovery</xsl:with-param>
+      <xsl:with-param name="title" select="/root/gui/schemas/*[name()=$schema]/strings/gvqTab"/>
+      <xsl:with-param name="default">gvqTabDiscovery</xsl:with-param>
       <xsl:with-param name="menu">
-        <item label="xyzTabDiscovery">xyzTabDiscovery</item>
+        <item label="gvqTabDiscovery">gvqTabDiscovery</item>
         ...
       </xsl:with-param>
     </xsl:call-template>
@@ -86,7 +87,7 @@
 
 
   <!-- Based template for dispatching each tabs -->
-  <xsl:template mode="iso19139.xyz" match="gmd:MD_Metadata|*[@gco:isoType='gmd:MD_Metadata']"
+  <xsl:template mode="iso19139.gvq" match="gvq:GVQ_Metadata|*[@gco:isoType='gvq:GVQ_Metadata']"
     priority="3">
     <xsl:param name="schema"/>
     <xsl:param name="edit"/>
@@ -250,8 +251,8 @@
       </xsl:when>
       <!--
         Register your custom tabs here and create the related template
-        <xsl:when test="$currTab='xyzTabDiscovery'">
-        <xsl:call-template name="xyzTabDiscovery">
+        <xsl:when test="$currTab='gvqTabDiscovery'">
+        <xsl:call-template name="gvqTabDiscovery">
           <xsl:with-param name="schema" select="$schema"/>
           <xsl:with-param name="edit" select="$edit"/>
           <xsl:with-param name="dataset" select="$dataset"/>
@@ -271,7 +272,7 @@
 
 
   <!-- Custom tab -->
-  <!--<xsl:template name="xyzTabDiscovery">
+  <!--<xsl:template name="gvqTabDiscovery">
     <xsl:param name="schema"/>
     <xsl:param name="edit"/>
     <xsl:param name="dataset"/>

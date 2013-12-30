@@ -2,16 +2,18 @@
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://geonetwork-opensource.org/schemas/schema-ident ../../../../../xml/validation/schemaPlugins/schema-ident.xsd"
  xmlns="http://geonetwork-opensource.org/schemas/schema-ident">
-	<name>iso19139.xyz</name>
-	<id>A ramdom UUID to generate</id>
-	<version>1.0</version>
+	<name>iso19139.gvq</name>
+	<id>31a56460-7172-11e3-981f-0800200c9a66</id>
+	<version>4.0</version>
 	<depends>iso19139</depends>
 	<!-- Profile XSD location -->
-	<schemaLocation>http://www.isotc211.org/2005/gmd http://www.isotc211.org/2005/gmd/gmd.xsd 
-		http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd</schemaLocation>
-	<autodetect xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xyz="http://my/schema/target/namespace">
+	<schemaLocation>http://www.geoviqua.org/QualityInformationModel/4.0 http://schemas.geoviqua.org/GVQ/4.0/GeoViQua_PQM_UQM.xsd 
+		http://www.uncertml.org/2.0 http://www.uncertml.org/uncertml.xsd
+		http://www.geoviqua.org/19115_updates http://schemas.geoviqua.org/ISO/19139/20120707_GVQ/19115_updates.xsd
+		http://www.geoviqua.org/gmd19157 http://schemas.geoviqua.org/ISO/19157/20120707_GVQ/19157_DataQuality.xsd</schemaLocation>
+	<autodetect xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0">
 		<elements type="root">
-			<!-- Define schema detection methodology -->
+			<gvq:GVQ_Metadata/>
 		</elements>
 	</autodetect>
 	<readwriteUuid>false</readwriteUuid>

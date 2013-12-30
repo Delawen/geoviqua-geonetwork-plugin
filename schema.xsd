@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema targetNamespace="http://my/schema/target/namespace" elementFormDefault="qualified"
-	xmlns:xyz="http://my/schema/target/namespace" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gmx="http://www.isotc211.org/2005/gmx"
-	xmlns:srv="http://www.isotc211.org/2005/srv">
-	<xs:include schemaLocation="schema/xyz.xsd"/>
-	<xs:import namespace="http://www.isotc211.org/2005/srv" schemaLocation="schema/srv/srv.xsd"/>
+<xs:schema targetNamespace="http://www.geoviqua.org/QualityInformationModel/4.0" elementFormDefault="qualified"
+	xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:gmd19157="http://www.geoviqua.org/gmd19157" xmlns:updated19115="http://www.geoviqua.org/19115_updates">
+	<xs:include schemaLocation="schema/GVQ/4.0/GeoViQua_PQM_UQM.xsd"/>
+	<xs:import namespace="http://www.uncertml.org/2.0" schemaLocation="schema/UncertML/uncertml.xsd"/>
 </xs:schema>
