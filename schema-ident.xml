@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://geonetwork-opensource.org/schemas/schema-ident ../../../../../xml/validation/schemaPlugins/schema-ident.xsd"
+ xsi:schemaLocation="http://geonetwork-opensource.org/schemas/schema-ident http://geonetwork-opensource.org/schemas/schema-ident/schema-ident.xsd"
  xmlns="http://geonetwork-opensource.org/schemas/schema-ident">
 	<name>iso19139.gvq</name>
 	<id>31a56460-7172-11e3-981f-0800200c9a66</id>
