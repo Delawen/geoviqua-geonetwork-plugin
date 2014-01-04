@@ -15,6 +15,146 @@
 	<xsl:import href="metadata-utils.xsl"/>
 	<xsl:import href="metadata-subtemplates.xsl"/>
 
+	<!-- ================================================================= -->
+	<!-- codelists -->
+	<!-- ================================================================= -->
+
+	<!-- load geoviqua codelists -->
+	<xsl:variable name="codelistsgvq" select="document('../schema/GVQ/4.0/resources/Codelist/gvqCodelists.xml')"/>
+	<xsl:variable name="codelistsgmd19157" select="document('../schema/ISO/19157/20120707_GVQ/resources/Codelist/gmd19157_Codelists.xml')"/>
+	<xsl:variable name="codelistsgmd19115updates" select="document('../schema/ISO/19139/20120707_GVQ/resources/Codelist/gmxUpdatedCodelists.xml')"/>
+	<!-- load INSPIRE codelists -->
+	<xsl:variable name="codelistsgmdINSPIRE" select="document('../schema/ISO/19139/20130610_INSPIRE/resources/codelist/gmxINSPIRECodelists.xml')"/>
+	<!-- load iso19139 codelists -->
+	<xsl:variable name="codelistsgmx19139" select="document('../schema/ISO/19139/20070417/resources/Codelist/gmxCodelists.xml')"/>
+
+	<!-- deep-copy each set of codelists to combine them -->
+	<xsl:variable name="codelistsCopy">
+		<xsl:for-each select="$codelistsgvq | $codelistsgmd19157 | $codelistsgmd19115updates | $codelistsgmdINSPIRE | $codelistsgmx19139">
+			<xsl:copy-of select="."/>
+		</xsl:for-each>
+	</xsl:variable>
+
+	<!-- index code definitions on their gml:id attribute so we can search for duplicates -->
+	<xsl:key name="kCodeDefinitionById" match="//gmx:codeEntry/gmx:CodeDefinition" use="@gml:id"/>
+
+	<!-- recursively copy all nodes & attributes -->
+	<xsl:template mode="codelistsCopyProcessing" match="node()|@*">
+		<xsl:copy>
+			<xsl:apply-templates mode="codelistsCopyProcessing" select="node()|@*"/>
+		</xsl:copy>
+	</xsl:template>
+
+	<!-- discard code definitions that occur more than once in the document and don't have the GeoViQua or ISOTC211/19157 codespace -->
+	<xsl:template mode="codelistsCopyProcessing" match="//gmx:codeEntry[gmx:CodeDefinition[(gml:identifier/@codeSpace != 'GeoViQua' and gml:identifier/@codeSpace != 'ISOTC211/19157') and (count(key('kCodeDefinitionById', @gml:id)) > 1)]]"/>
+
+	<!-- process the combined codelists -->
+	<xsl:variable name="codelistsProcessed">
+		<xsl:apply-templates mode="codelistsCopyProcessing" select="$codelistsCopy"/>
+	</xsl:variable>
+
+	<xsl:template mode="iso19139.gvq" match="gmd:*[*/@codeList]|gvq:*[*/@codeList]|updated19115:*[*/@codeList]|gmd19157:*[*/@codeList]">
+		<xsl:param name="schema"/>
+		<xsl:param name="edit"/>
+
+		<xsl:call-template name="gvqCodelist">
+			<xsl:with-param name="schema" select="$schema"/>
+			<xsl:with-param name="edit"   select="$edit"/>
+		</xsl:call-template>
+	</xsl:template>
+
+	<xsl:template mode="iso19139.gvq" match="//gvq:GVQ_Metadata/gmd:characterSet|//*[@gco:isoType='gvq:GVQ_Metadata']/gmd:characterSet" priority="2">
+		<xsl:param name="schema"/>
+		<xsl:param name="edit"/>
+
+		<xsl:call-template name="gvqCodelist">
+			<xsl:with-param name="schema"  select="$schema"/>
+			<xsl:with-param name="edit"    select="false()"/>
+		</xsl:call-template>
+	</xsl:template>
+
+	<xsl:template name="gvqCodelist">
+		<xsl:param name="schema"/>
+		<xsl:param name="edit"/>
+
+		<xsl:apply-templates mode="simpleElement" select=".">
+			<xsl:with-param name="schema" select="$schema"/>
+			<xsl:with-param name="edit"   select="$edit"/>
+			<xsl:with-param name="text">
+				<xsl:apply-templates mode="gvqGetAttributeText" select="*/@codeListValue">
+					<xsl:with-param name="schema" select="$schema"/>
+					<xsl:with-param name="edit"   select="$edit"/>
+				</xsl:apply-templates>
+			</xsl:with-param>
+		</xsl:apply-templates>
+	</xsl:template>
+
+	<xsl:template mode="gvqGetAttributeText" match="@*">
+		<xsl:param name="schema"/>
+		<xsl:param name="edit"/>
+
+		<xsl:variable name="name"     select="local-name(..)"/>
+		<xsl:variable name="qname"    select="name(..)"/>
+		<xsl:variable name="value"    select="../@codeListValue"/>
+
+		<xsl:choose>
+			<xsl:when test="$qname='gmd:LanguageCode'">
+				<xsl:apply-templates mode="iso19139" select="..">
+					<xsl:with-param name="edit" select="$edit"/>
+				</xsl:apply-templates>
+			</xsl:when>
+			<xsl:otherwise>
+
+				<xsl:variable name="codelist" select="$codelistsProcessed/gmx:CT_CodelistCatalogue/gmx:codelistItem/gmx:CodeListDictionary[gml:identifier=$name]" />
+				<xsl:variable name="isXLinked" select="count(ancestor-or-self::node()[@xlink:href]) > 0" />
+
+				<xsl:choose>
+					<xsl:when test="$edit=true()">
+						<!-- codelist in edit mode -->
+						<select class="md" name="_{../geonet:element/@ref}_{name(.)}" id="_{../geonet:element/@ref}_{name(.)}" size="1">
+							<!-- Check element is mandatory or not -->
+							<xsl:if test="../../geonet:element/@min='1' and $edit">
+								<xsl:attribute name="onchange">validateNonEmpty(this);</xsl:attribute>
+							</xsl:if>
+							<xsl:if test="$isXLinked">
+								<xsl:attribute name="disabled">disabled</xsl:attribute>
+							</xsl:if>
+							<option name=""/>
+							<xsl:for-each select="$codelist/gmx:codeEntry">
+								<xsl:sort select="gmx:CodeDefinition/gml:identifier"/>
+								<option>
+									<xsl:if test="gmx:CodeDefinition/gml:identifier=$value">
+										<xsl:attribute name="selected"/>
+									</xsl:if>
+									<xsl:attribute name="value"><xsl:value-of select="gmx:CodeDefinition/gml:identifier"/></xsl:attribute>
+									<xsl:value-of select="gmx:CodeDefinition/gml:identifier"/>
+								</option>
+							</xsl:for-each>
+						</select>
+					</xsl:when>
+					<xsl:otherwise>
+						<!-- codelist in view mode -->
+						<xsl:if test="normalize-space($value)!=''">
+							<b><xsl:value-of select="$value"/></b>
+							<xsl:value-of select="concat(': ',$codelist/gmx:codeEntry[gmx:CodeDefinition/gml:identifier=$value]/gmx:CodeDefinition/gml:description)"/>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:otherwise>
+		</xsl:choose>
+		<!--
+		<xsl:call-template name="getAttributeText">
+			<xsl:with-param name="schema" select="$schema"/>
+			<xsl:with-param name="edit"   select="$edit"/>
+		</xsl:call-template>
+		-->
+	</xsl:template>
+
+
+  <!-- gmx:FileName could be used as substitution of any
+    gco:CharacterString. To turn this on add a schema 
+    suggestion.
+    -->
 	<xsl:template mode="iso19139.gvq" name="gvq-file-upload" match="*[gmx:FileName]">
 		<xsl:param name="schema"/>
 		<xsl:param name="edit"/>
@@ -370,7 +510,7 @@
 				<xsl:otherwise>
 					<!-- call iso19139 brief -->
 					<xsl:call-template name="iso19139-brief"/>
-					<!-- now brief elements for mcp specific elements -->
+					<!-- now brief elements for gvq specific elements -->
 					<xsl:call-template name="iso19139.gvq-brief"/>
 				</xsl:otherwise>
 			</xsl:choose>
@@ -389,7 +529,10 @@
 			<xsl:with-param name="schema" select="$schema"/>
 		</xsl:call-template>
 	</xsl:template>
-	
+
+	<!-- ================================================================= -->
+	<!-- Main processing -->
+	<!-- ================================================================= -->
 	
 	<!-- Check if any elements are overriden here in iso19139.gvq mode
 	if not fallback to iso19139 -->
@@ -422,10 +565,10 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-	
-	
+
 	<!-- To support processing in two modes we need to add a null template to the profile mode  -->
 	<xsl:template mode="iso19139.gvq" match="*|@*"/>
 
+	<!-- Javascript used by functions in this presentation XSLT -->
 	<xsl:template name="iso19139.gvq-javascript"/>
 </xsl:stylesheet>
