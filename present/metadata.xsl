@@ -273,7 +273,7 @@
 
 			<!-- dataQuality tab -->
 			<xsl:when test="$currTab='dataQuality'">
-				<xsl:apply-templates mode="elementEP" select="gmd:dataQualityInfo|geonet:child[string(@name)='dataQualityInfo']">
+				<xsl:apply-templates mode="elementEP" select="gvq:dataQualityInfo|geonet:child[string(@name)='dataQualityInfo']">
 					<xsl:with-param name="schema" select="$schema"/>
 					<xsl:with-param name="edit"   select="$edit"/>
 				</xsl:apply-templates>
