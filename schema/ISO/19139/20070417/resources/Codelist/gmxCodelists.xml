@@ -254,7 +254,7 @@ DESCRIPTION :
 			</codeEntry>
 			<codeEntry>
 				<CodeDefinition gml:id="CI_RoleCode_processor">
-					<gml:description>party wha has processed the data in a manner such that the resource has been modified</gml:description>
+					<gml:description>party who has processed the data in a manner such that the resource has been modified</gml:description>
 					<gml:identifier codeSpace="ISOTC211/19115">processor</gml:identifier>
 				</CodeDefinition>
 			</codeEntry>
