@@ -424,5 +424,8 @@
 	</xsl:template>
 	
 	
+	<!-- To support processing in two modes we need to add a null template to the profile mode  -->
+	<xsl:template mode="iso19139.gvq" match="*|@*"/>
+
 	<xsl:template name="iso19139.gvq-javascript"/>
 </xsl:stylesheet>
