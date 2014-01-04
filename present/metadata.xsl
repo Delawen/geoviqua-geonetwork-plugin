@@ -13,6 +13,7 @@
 	
 	<xsl:import href="../../iso19139/present/metadata-iso19139-fop.xsl"/>
 	<xsl:import href="metadata-utils.xsl"/>
+	<xsl:import href="metadata-subtemplates.xsl"/>
 
 	<xsl:template mode="iso19139.gvq" name="gvq-file-upload" match="*[gmx:FileName]">
 		<xsl:param name="schema"/>
@@ -359,22 +360,24 @@
 		</xsl:choose>
 	</xsl:template>
 
-	
 	<xsl:template name="iso19139.gvqBrief">
 		<metadata>
 			<xsl:choose>
 				<xsl:when test="geonet:info/isTemplate='s'">
-					<xsl:call-template name="iso19139-subtemplate"/>
+					<xsl:call-template name="iso19139.gvq-subtemplate"/>
 					<xsl:copy-of select="geonet:info" copy-namespaces="no"/>
 				</xsl:when>
 				<xsl:otherwise>
-					
 					<!-- call iso19139 brief -->
 					<xsl:call-template name="iso19139-brief"/>
+					<!-- now brief elements for mcp specific elements -->
+					<xsl:call-template name="iso19139.gvq-brief"/>
 				</xsl:otherwise>
 			</xsl:choose>
 		</metadata>
 	</xsl:template>
+
+	<xsl:template name="iso19139.gvq-brief"/>
 	
 	
 	<xsl:template name="iso19139.gvqCompleteTab">
