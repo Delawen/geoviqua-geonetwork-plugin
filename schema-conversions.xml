@@ -11,10 +11,10 @@
 -->
 <conversions>
 	<!-- GeoViQua specific -->
-	<converter name="xml_iso19139.geoviqua" nsUri="http://www.geoviqua.org/QualityInformationModel/4.0"
+	<converter name="xml_geoviqua" nsUri="http://www.geoviqua.org/QualityInformationModel/4.0"
 		schemaLocation="http://schemas.geoviqua.org/GVQ/4.0/GeoViQua_PQM_UQM.xsd" xslt="xml_iso19139.geoviqua.xsl"/>
-	<converter name="xml_iso19139.geoviquaTo19139" nsUri="http://www.isotc211.org/2005/gmd"
+	<converter name="xml_geoviqua_to_iso19139" nsUri="http://www.isotc211.org/2005/gmd"
 		schemaLocation="www.isotc211.org/2005/gmd/gmd.xsd" xslt="to19139.xsl"/>
-	<converter name="xml_iso19139.geoviquaTooai_dc" nsUri="http://www.openarchives.org/OAI/2.0/"
+	<converter name="xml_geoviqua_to_oai_dc" nsUri="http://www.openarchives.org/OAI/2.0/"
 		schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc.xsd" xslt="oai_dc.xsl"/>
 </conversions>
