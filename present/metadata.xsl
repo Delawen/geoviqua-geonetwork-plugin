@@ -332,9 +332,11 @@
 					<div style="float:left;width:70%;">
 						<!-- geolabel -->
 						<div id="xhr_geolabel" style="position: relative; overflow: hidden; float: left; text-align: center; margin: 0 20px; width: 150px; height: 150px;">
-							<input name="xhr_metadata" id="xhr_metadata" type="hidden">
-								<xsl:attribute name="value"><xsl:value-of select="saxon:serialize(., 'serialize')" /></xsl:attribute>
-							</input>
+							<xsl:variable name="serialized_xml"><xsl:value-of select="saxon:serialize(., 'serialize')" /></xsl:variable>
+							<xsl:variable name="geonet_id"><xsl:value-of select="geonet:info/id" /></xsl:variable>
+							<xsl:variable name="geonet_uuid"><xsl:value-of select="geonet:info/uuid" /></xsl:variable>
+							<input name="xhr_metadata" id="xhr_metadata" type="hidden" value="{$serialized_xml}"/>
+							<input name="xhr_id" id="xhr_id" type="hidden" value="{$geonet_id}_{$geonet_uuid}"/>
 						</div>
 						<xsl:call-template name="iso19139.geoviqua-javascript"/>
 						<!-- thumbnail -->
@@ -716,7 +718,7 @@
 				else if (xhr.status === 200) {
 					container.innerHTML = json.data.label_svg;
 					if (sessionStorage) {
-						sessionStorage.setItem('geolabel', json.data.label_svg);
+						sessionStorage.setItem(key, json.data.label_svg);
 					}
 				}
 			};
@@ -731,10 +733,11 @@
 			xhr.send(params);
 		}
 
-		var container = document.getElementById('xhr_geolabel');
+		var container = document.getElementById('xhr_geolabel'),
+			key = 'geolabel_' + document.getElementById('xhr_id').value;
 
-		if (sessionStorage && sessionStorage.getItem('geolabel')) {
-			container.innerHTML = sessionStorage.getItem('geolabel');
+		if (sessionStorage && sessionStorage.getItem(key)) {
+			container.innerHTML = sessionStorage.getItem(key);
 		}
 		else {
 			requestGEOlabel();
