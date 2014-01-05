@@ -609,7 +609,7 @@
 
 		function requestGEOlabel() {
 
-			var xhr = createCORSRequest('POST', 'http://tutorial.geoviqua.org/geolabel.php'),
+			var xhr = createCORSRequest('POST', 'http://tutorial.geoviqua.org/geolabel.php?cors'),
 				params = "metadata=" + encodeURIComponent(document.getElementById('xhr_metadata').value) + "&size=150";
 
 			if (!xhr) {
