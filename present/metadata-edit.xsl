@@ -14,7 +14,7 @@
     gco:CharacterString. To turn this on add a schema 
     suggestion.
     -->
-  <xsl:template mode="iso19139.gvq" name="gvq-file-upload" match="*[gmx:FileName]">
+  <xsl:template mode="iso19139.geoviqua" name="gvq-file-upload" match="*[gmx:FileName]">
     <xsl:param name="schema"/>
     <xsl:param name="edit"/>
     
@@ -35,7 +35,7 @@
   </xsl:template>
 
   <!-- Add exception to update-fixed-info to avoid URL creation for downloadable resources -->
-  <xsl:template mode="iso19139.gvq" match="gmd:contactInstructions[gmx:FileName]" priority="2">
+  <xsl:template mode="iso19139.geoviqua" match="gmd:contactInstructions[gmx:FileName]" priority="2">
     <xsl:param name="schema"/>
     <xsl:param name="edit"/>
     
@@ -176,11 +176,11 @@
   </xsl:template>
 
   <!-- Simple views is ISO19139 -->
-  <xsl:template name="metadata-iso19139.gvqview-simple">
+  <xsl:template name="metadata-iso19139.geoviquaview-simple">
     <xsl:call-template name="metadata-iso19139view-simple"/>
   </xsl:template>
 
-  <xsl:template name="view-with-header-iso19139.gvq">
+  <xsl:template name="view-with-header-iso19139.geoviqua">
     <xsl:param name="tabs"/>
 
     <xsl:call-template name="view-with-header-iso19139">
@@ -191,16 +191,16 @@
 
 
 
-  <!-- Check if any elements are overriden here in iso19139.gvq mode
+  <!-- Check if any elements are overriden here in iso19139.geoviqua mode
   if not fallback to iso19139 -->
-  <xsl:template name="metadata-iso19139.gvq" match="metadata-iso19139.gvq">
+  <xsl:template name="metadata-iso19139.geoviqua" match="metadata-iso19139.geoviqua">
     <xsl:param name="schema"/>
     <xsl:param name="edit" select="false()"/>
     <xsl:param name="embedded"/>
 
     <!-- process in profile mode first -->
     <xsl:variable name="profileElements">
-      <xsl:apply-templates mode="iso19139.gvq" select=".">
+      <xsl:apply-templates mode="iso19139.geoviqua" select=".">
         <xsl:with-param name="schema" select="$schema"/>
         <xsl:with-param name="edit" select="$edit"/>
         <xsl:with-param name="embedded" select="$embedded"/>
@@ -228,7 +228,7 @@
 
 
   <!-- Tab configuration -->
-  <xsl:template name="iso19139.gvqCompleteTab">
+  <xsl:template name="iso19139.geoviquaCompleteTab">
     <xsl:param name="tabLink"/>
     <xsl:param name="schema"/>
 
@@ -254,7 +254,7 @@
 
 
   <!-- Based template for dispatching each tabs -->
-  <xsl:template mode="iso19139.gvq" match="gvq:GVQ_Metadata|*[@gco:isoType='gvq:GVQ_Metadata']"
+  <xsl:template mode="iso19139.geoviqua" match="gvq:GVQ_Metadata|*[@gco:isoType='gvq:GVQ_Metadata']"
     priority="3">
     <xsl:param name="schema"/>
     <xsl:param name="edit"/>

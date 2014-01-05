@@ -7,13 +7,13 @@
 		xmlns:geonet="http://www.fao.org/geonetwork"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <!-- This stylesheet produces iso19139.gvq metadata in XML format -->
+  <!-- This stylesheet produces iso19139.geoviqua metadata in XML format -->
   <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes" />
 
   <!-- Metadata is passed under /root XPath -->
   <xsl:template match="/root">
     <xsl:choose>
-      <!-- Export iso19139.gvq XML (just a copy) -->
+      <!-- Export iso19139.geoviqua XML (just a copy) -->
       <xsl:when test="gvq:GVQ_Metadata">
         <xsl:apply-templates select="gvq:GVQ_Metadata"/>
       </xsl:when>

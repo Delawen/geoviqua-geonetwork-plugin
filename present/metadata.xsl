@@ -56,7 +56,7 @@
 		<xsl:apply-templates mode="codelistsCopyProcessing" select="$codelistsCopy"/>
 	</xsl:variable>
 
-	<xsl:template mode="iso19139.gvq" match="gmd:*[*/@codeList]|gvq:*[*/@codeList]|updated19115:*[*/@codeList]|gmd19157:*[*/@codeList]">
+	<xsl:template mode="iso19139.geoviqua" match="gmd:*[*/@codeList]|gvq:*[*/@codeList]|updated19115:*[*/@codeList]|gmd19157:*[*/@codeList]">
 		<xsl:param name="schema"/>
 		<xsl:param name="edit"/>
 
@@ -66,7 +66,7 @@
 		</xsl:call-template>
 	</xsl:template>
 
-	<xsl:template mode="iso19139.gvq" match="//gvq:GVQ_Metadata/gmd:characterSet|//*[@gco:isoType='gvq:GVQ_Metadata']/gmd:characterSet" priority="2">
+	<xsl:template mode="iso19139.geoviqua" match="//gvq:GVQ_Metadata/gmd:characterSet|//*[@gco:isoType='gvq:GVQ_Metadata']/gmd:characterSet" priority="2">
 		<xsl:param name="schema"/>
 		<xsl:param name="edit"/>
 
@@ -158,7 +158,7 @@
     gco:CharacterString. To turn this on add a schema 
     suggestion.
     -->
-	<xsl:template mode="iso19139.gvq" name="gvq-file-upload" match="*[gmx:FileName]">
+	<xsl:template mode="iso19139.geoviqua" name="gvq-file-upload" match="*[gmx:FileName]">
 		<xsl:param name="schema"/>
 		<xsl:param name="edit"/>
 
@@ -178,7 +178,7 @@
 	</xsl:template>
 
 	<!-- Add exception to update-fixed-info to avoid URL creation for downloadable resources -->
-	<xsl:template mode="iso19139.gvq" match="gmd:contactInstructions[gmx:FileName]" priority="2">
+	<xsl:template mode="iso19139.geoviqua" match="gmd:contactInstructions[gmx:FileName]" priority="2">
 		<xsl:param name="schema"/>
 		<xsl:param name="edit"/>
 
@@ -318,7 +318,7 @@
 	<!-- Metadata -->
 	<!-- ==================================================================== -->
 
-	<xsl:template mode="iso19139.gvq" match="gvq:GVQ_Metadata|*[@gco:isoType='gvq:GVQ_Metadata']">
+	<xsl:template mode="iso19139.geoviqua" match="gvq:GVQ_Metadata|*[@gco:isoType='gvq:GVQ_Metadata']">
 		<xsl:param name="schema"/>
 		<xsl:param name="edit"/>
 		<xsl:param name="embedded"/>
@@ -336,7 +336,7 @@
 								<xsl:attribute name="value"><xsl:value-of select="saxon:serialize(., 'serialize')" /></xsl:attribute>
 							</input>
 						</div>
-						<xsl:call-template name="iso19139.gvq-javascript"/>
+						<xsl:call-template name="iso19139.geoviqua-javascript"/>
 						<!-- thumbnail -->
 						<xsl:variable name="md">
 							<xsl:apply-templates mode="brief" select="."/>
@@ -511,27 +511,27 @@
 		</xsl:choose>
 	</xsl:template>
 
-	<xsl:template name="iso19139.gvqBrief">
+	<xsl:template name="iso19139.geoviquaBrief">
 		<metadata>
 			<xsl:choose>
 				<xsl:when test="geonet:info/isTemplate='s'">
-					<xsl:call-template name="iso19139.gvq-subtemplate"/>
+					<xsl:call-template name="iso19139.geoviqua-subtemplate"/>
 					<xsl:copy-of select="geonet:info" copy-namespaces="no"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<!-- call iso19139 brief -->
 					<xsl:call-template name="iso19139-brief"/>
 					<!-- now brief elements for gvq specific elements -->
-					<xsl:call-template name="iso19139.gvq-brief"/>
+					<xsl:call-template name="iso19139.geoviqua-brief"/>
 				</xsl:otherwise>
 			</xsl:choose>
 		</metadata>
 	</xsl:template>
 
-	<xsl:template name="iso19139.gvq-brief"/>
+	<xsl:template name="iso19139.geoviqua-brief"/>
 	
 	
-	<xsl:template name="iso19139.gvqCompleteTab">
+	<xsl:template name="iso19139.geoviquaCompleteTab">
 		<xsl:param name="tabLink"/>
 		<xsl:param name="schema"/>
 		
@@ -545,16 +545,16 @@
 	<!-- Main processing -->
 	<!-- ================================================================= -->
 	
-	<!-- Check if any elements are overriden here in iso19139.gvq mode
+	<!-- Check if any elements are overriden here in iso19139.geoviqua mode
 	if not fallback to iso19139 -->
-	<xsl:template name="metadata-iso19139.gvq" match="metadata-iso19139.gvq">
+	<xsl:template name="metadata-iso19139.geoviqua" match="metadata-iso19139.geoviqua">
 		<xsl:param name="schema"/>
 		<xsl:param name="edit" select="false()"/>
 		<xsl:param name="embedded"/>
 
 		<!-- process in profile mode first -->
 		<xsl:variable name="profileElements">
-			<xsl:apply-templates mode="iso19139.gvq" select=".">
+			<xsl:apply-templates mode="iso19139.geoviqua" select=".">
 				<xsl:with-param name="schema" select="$schema"/>
 				<xsl:with-param name="edit" select="$edit"/>
 				<xsl:with-param name="embedded" select="$embedded"/>
@@ -578,10 +578,10 @@
 	</xsl:template>
 
 	<!-- To support processing in two modes we need to add a null template to the profile mode  -->
-	<xsl:template mode="iso19139.gvq" match="*|@*"/>
+	<xsl:template mode="iso19139.geoviqua" match="*|@*"/>
 
 	<!-- Javascript used by functions in this presentation XSLT -->
-	<xsl:template name="iso19139.gvq-javascript">
+	<xsl:template name="iso19139.geoviqua-javascript">
 		<script type="text/javascript">
 		<![CDATA[
 		function createCORSRequest(method, url) {

@@ -7,9 +7,9 @@
 
   <!-- Subtemplate mode - overrides for iso19139 are placed in here
 	     -->
-  <xsl:template name="iso19139.gvq-subtemplate">
+  <xsl:template name="iso19139.geoviqua-subtemplate">
 		<xsl:variable name="gvqElements">
-			<xsl:apply-templates mode="iso19139.gvq-subtemplate" select="."/>
+			<xsl:apply-templates mode="iso19139.geoviqua-subtemplate" select="."/>
 		</xsl:variable>
 
 		<xsl:choose>
@@ -25,6 +25,6 @@
 		</xsl:choose>
 	</xsl:template>
 
-  <xsl:template mode="iso19139.gvq-subtemplate" match="*"/>
+  <xsl:template mode="iso19139.geoviqua-subtemplate" match="*"/>
   
 </xsl:stylesheet>

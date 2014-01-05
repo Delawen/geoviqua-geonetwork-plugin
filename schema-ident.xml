@@ -2,7 +2,7 @@
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://geonetwork-opensource.org/schemas/schema-ident http://geonetwork-opensource.org/schemas/schema-ident/schema-ident.xsd"
  xmlns="http://geonetwork-opensource.org/schemas/schema-ident">
-	<name>iso19139.gvq</name>
+	<name>iso19139.geoviqua</name>
 	<id>31a56460-7172-11e3-981f-0800200c9a66</id>
 	<version>4.0</version>
 	<depends>iso19139</depends>
