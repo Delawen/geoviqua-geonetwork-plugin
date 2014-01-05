@@ -6,7 +6,8 @@
 	xmlns:srv="http://www.isotc211.org/2005/srv"
 	xmlns:java="java:org.fao.geonet.util.XslUtil"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0">
+	xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0"
+	xmlns:updated19115="http://www.geoviqua.org/19115_updates">
 
 	<!--This file defines what parts of the metadata are indexed by Lucene
 		Searches can be conducted on indexes defined here.
@@ -111,7 +112,7 @@
 
 			<xsl:for-each select="gmd:citation/gmd:CI_Citation">
 
-				<xsl:for-each select="gmd:identifier/gmd:MD_Identifier/gmd:code//gmd:LocalisedCharacterString[@locale=$langId]">
+				<xsl:for-each select="gmd:identifier/(gmd:MD_Identifier|updated19115:MD_Identifier)/gmd:code//gmd:LocalisedCharacterString[@locale=$langId]">
 					<Field name="identifier" string="{string(.)}" store="true" index="true"/>
 				</xsl:for-each>
 
@@ -163,7 +164,7 @@
 			<xsl:for-each select="*/gmd:EX_Extent">
 				<xsl:apply-templates select="gmd:geographicElement/gmd:EX_GeographicBoundingBox" mode="latLon"/>
 
-				<xsl:for-each select="gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code//gmd:LocalisedCharacterString[@locale=$langId]">
+				<xsl:for-each select="gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/(gmd:MD_Identifier|updated19115:MD_Identifier)/gmd:code//gmd:LocalisedCharacterString[@locale=$langId]">
 					<Field name="geoDescCode" string="{string(.)}" store="true" index="true"/>
 				</xsl:for-each>
 
@@ -345,7 +346,7 @@
 
 			<!-- index online protocol -->
 
-			<xsl:for-each select="gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:protocol//gmd:LocalisedCharacterString[@locale=$langId]">
+			<xsl:for-each select="gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/*[local-name(.) = 'CI_OnlineResource']/gmd:protocol//gmd:LocalisedCharacterString[@locale=$langId]">
 				<Field name="protocol" string="{string(.)}" store="true" index="true"/>
 			</xsl:for-each>
 		</xsl:for-each>

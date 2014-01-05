@@ -7,7 +7,9 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:gmx="http://www.isotc211.org/2005/gmx"
 	xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-	xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0">
+	xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0"
+	xmlns:gmd19157="http://www.geoviqua.org/gmd19157"
+	xmlns:updated19115="http://www.geoviqua.org/19115_updates">
 
 	<xsl:include href="../iso19139/convert/functions.xsl"/>
 	<xsl:include href="../../../xsl/utils-fn.xsl"/>
@@ -113,7 +115,7 @@
 			gmd:identificationInfo/srv:SV_ServiceIdentification">
 
 			<xsl:for-each select="gmd:citation/gmd:CI_Citation">
-				<xsl:for-each select="gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString">
+				<xsl:for-each select="gmd:identifier/(gmd:MD_Identifier|updated19115:MD_Identifier)/gmd:code/gco:CharacterString">
 					<Field name="identifier" string="{string(.)}" store="true" index="true"/>
 				</xsl:for-each>
 
@@ -194,7 +196,7 @@
 			<xsl:for-each select="*/gmd:EX_Extent">
 				<xsl:apply-templates select="gmd:geographicElement/gmd:EX_GeographicBoundingBox" mode="latLon"/>
 
-				<xsl:for-each select="gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString">
+				<xsl:for-each select="gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/(gmd:MD_Identifier|updated19115:MD_Identifier)/gmd:code/gco:CharacterString">
 					<Field name="geoDescCode" string="{string(.)}" store="true" index="true"/>
 				</xsl:for-each>
 
@@ -348,7 +350,7 @@
 			 http://localhost:8080/geonetwork/srv/fre/q?agg_with_association=crossReference
 			-->
 			<xsl:for-each select="gmd:aggregationInfo/gmd:MD_AggregateInformation">
-				<xsl:variable name="code" select="gmd:aggregateDataSetIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString|
+				<xsl:variable name="code" select="gmd:aggregateDataSetIdentifier/(gmd:MD_Identifier|updated19115:MD_Identifier)/gmd:code/gco:CharacterString|
 												gmd:aggregateDataSetIdentifier/gmd:RS_Identifier/gmd:code/gco:CharacterString"/>
 				<xsl:if test="$code != ''">
 					<xsl:variable name="associationType" select="gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue"/>
@@ -438,7 +440,7 @@
 
 			<!-- index online protocol -->
 			
-			<xsl:for-each select="gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource[gmd:linkage/gmd:URL!='']">
+			<xsl:for-each select="gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/(gmd:CI_OnlineResource|updated19115:CI_OnlineResource)[gmd:linkage/gmd:URL!='']">
 				<xsl:variable name="download_check"><xsl:text>&amp;fname=&amp;access</xsl:text></xsl:variable>
 				<xsl:variable name="linkage" select="gmd:linkage/gmd:URL" /> 
 				<xsl:variable name="title" select="normalize-space(gmd:name/gco:CharacterString|gmd:name/gmx:MimeFileType)"/>
@@ -499,11 +501,11 @@
 		</xsl:for-each>
 		
 		<!-- === Data Quality  === -->
-		<xsl:for-each select="gvq:dataQualityInfo/*/gmd19157:lineage//gmd:source[@uuidref]">
+		<xsl:for-each select="gvq:dataQualityInfo/*/gmd19157:lineage//gmd19157:source[@uuidref]">
 			<Field  name="hassource" string="{string(@uuidref)}" store="false" index="true"/>
 		</xsl:for-each>
 		
-		<xsl:for-each select="gvq:dataQualityInfo/*/gmd:report/*/gmd:result">
+		<xsl:for-each select="gvq:dataQualityInfo/*/gmd19157:report/*/gmd19157:result">
 			<xsl:if test="$inspire='true'">
 				<!-- 
 				INSPIRE related dataset could contains a conformity section with:
@@ -569,7 +571,7 @@
 		<xsl:variable name="isInteractive" select="count(gmd:distributionInfo/gmd:MD_Distribution/
 			gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString[contains(., 'OGC:WMC') or contains(., 'OGC:OWS')]) > 0"/>
 		<xsl:variable name="isPublishedWithWMCProtocol" select="count(gmd:distributionInfo/gmd:MD_Distribution/
-			gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:protocol[starts-with(gco:CharacterString, 'OGC:WMC')]) > 0"/>
+			gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/(gmd:CI_OnlineResource|updated19115:CI_OnlineResource)/gmd:protocol[starts-with(gco:CharacterString, 'OGC:WMC')]) > 0"/>
 		
 		<xsl:if test="$isDataset and $isMapDigital and ($isStatic or $isInteractive or $isPublishedWithWMCProtocol)">
 			<Field name="type" string="map" store="true" index="true"/>
