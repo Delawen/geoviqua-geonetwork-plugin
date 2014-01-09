@@ -1,38 +1,31 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!--Created with Liquid XML Studio Developer Edition (Education) 9.1.11.3570 (http://www.liquid-technologies.com)-->
-<xs:schema xmlns:updated19115="http://www.geoviqua.org/19115_updates" 
-xmlns:gco="http://www.isotc211.org/2005/gco" 
-xmlns:gmd="http://www.isotc211.org/2005/gmd" 
-targetNamespace="http://www.geoviqua.org/19115_updates" 
-xmlns:xs="http://www.w3.org/2001/XMLSchema"
-elementFormDefault="qualified" 
-version="3.1.0">
-    
-<!--  online schema location - ISO at opengis -->
+<!--Created with Liquid XML Studio 2012 Developer Edition 10.1.2.4113 (http://www.liquid-technologies.com)-->
+<xs:schema xmlns:updated19115="http://www.geoviqua.org/19115_updates" xmlns:gmd19157="http://www.geoviqua.org/gmd19157" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" elementFormDefault="qualified" targetNamespace="http://www.geoviqua.org/19115_updates" version="3.1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <!--  online schema location - ISO at opengis -->
     <xs:import schemaLocation="../../../ISO/19139/20070417/gco/gco.xsd" namespace="http://www.isotc211.org/2005/gco" />
     <xs:import schemaLocation="../../../ISO/19139/20070417/gmd/gmd.xsd" namespace="http://www.isotc211.org/2005/gmd" />
-
+    <xs:import schemaLocation="../../19157/20120707_GVQ/19157_DataQuality.xsd" namespace="http://www.geoviqua.org/gmd19157" />
     <!-- ======================= Update to MD_Identifer from recent 19115 versions ============================================ -->
     <xs:complexType name="MD_Identifier_Type">
         <xs:complexContent>
             <xs:extension base="gmd:MD_Identifier_Type">
                 <xs:sequence>
-                    <xs:element name="codeSpace" type="gco:CharacterString_PropertyType" minOccurs="0" maxOccurs="1"/>
-                    <xs:element name="version" type="gco:CharacterString_PropertyType" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="codeSpace" type="gco:CharacterString_PropertyType" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="version" type="gco:CharacterString_PropertyType" minOccurs="0" maxOccurs="1" />
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
     <!-- ........................................................................ -->
-    <xs:element name="MD_Identifier" type="updated19115:MD_Identifier_Type" substitutionGroup="gmd:MD_Identifier"/>
+    <xs:element name="MD_Identifier" type="updated19115:MD_Identifier_Type" substitutionGroup="gmd:MD_Identifier" />
     <!-- ........................................................................ -->
-   <xs:complexType name="MD_Identifier_PropertyType">
+    <xs:complexType name="MD_Identifier_PropertyType">
         <xs:sequence minOccurs="0">
             <xs:element ref="updated19115:MD_Identifier" />
         </xs:sequence>
         <xs:attributeGroup ref="gco:ObjectReference" />
         <xs:attribute ref="gco:nilReason" />
-    </xs:complexType> 
+    </xs:complexType>
     <!-- =========================================================================== -->
     <!-- ======================= MD_AssociatedResource: new to 19115 ============================================ -->
     <xs:complexType name="MD_AssociatedResource_Type">
@@ -59,13 +52,13 @@ version="3.1.0">
         <xs:attribute ref="gco:nilReason" />
     </xs:complexType>
     <!-- =========================================================================== -->
-	<xs:complexType name="CI_OnlineResource_Type">
-		<xs:annotation>
-			<xs:documentation>Information about online sources from which the dataset, specification, or community profile name and extended metadata elements can be obtained.</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
-			<xs:extension base="gmd:CI_OnlineResource_Type">
-				<xs:sequence>
+    <xs:complexType name="CI_OnlineResource_Type">
+        <xs:annotation>
+            <xs:documentation>Information about online sources from which the dataset, specification, or community profile name and extended metadata elements can be obtained.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="gmd:CI_OnlineResource_Type">
+                <xs:sequence>
                     <!--
 					<xs:element name="linkage" type="gmd:URL_PropertyType"/>
 					<xs:element name="protocol" type="gco:CharacterString_PropertyType" minOccurs="0"/>
@@ -75,19 +68,156 @@ version="3.1.0">
 					<xs:element name="function" type="gmd:CI_OnLineFunctionCode_PropertyType" minOccurs="0"/>
                     -->
                     <!-- added as part of 19115-1 -->
-                    <xs:element name="protocolRequest" type="gco:CharacterString_PropertyType" minOccurs="0"/>
-				</xs:sequence>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-	<!-- ........................................................................ -->
-	<xs:element name="CI_OnlineResource" type="updated19115:CI_OnlineResource_Type" substitutionGroup="gmd:CI_OnlineResource"/>
-	<!-- ........................................................................ -->
-	<xs:complexType name="CI_OnlineResource_PropertyType">
-		<xs:sequence minOccurs="0">
-			<xs:element ref="updated19115:CI_OnlineResource"/>
-		</xs:sequence>
-		<xs:attributeGroup ref="gco:ObjectReference"/>
-		<xs:attribute ref="gco:nilReason"/>
-	</xs:complexType>
+                    <xs:element name="protocolRequest" type="gco:CharacterString_PropertyType" minOccurs="0" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <!-- ........................................................................ -->
+    <xs:element name="CI_OnlineResource" type="updated19115:CI_OnlineResource_Type" substitutionGroup="gmd:CI_OnlineResource" />
+    <!-- ........................................................................ -->
+    <xs:complexType name="CI_OnlineResource_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="updated19115:CI_OnlineResource" />
+        </xs:sequence>
+        <xs:attributeGroup ref="gco:ObjectReference" />
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    <!-- ======================= Addition of LE_ProcessStep (19115-2) which extends LI_ProcessStep ============================================ -->
+    <xs:complexType name="LE_ProcessStep_Type">
+        <xs:complexContent>
+            <xs:extension base="gmd19157:LI_ProcessStep_Type">
+                <xs:sequence>
+                    <xs:element name="processingInformation" type="updated19115:LE_Processing_PropertyType" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="report" type="updated19115:LE_ProcessStepReport_PropertyType" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="output" type="updated19115:LE_Source_PropertyType" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <!-- ........................................................................ -->
+    <xs:element name="LE_ProcessStep" type="updated19115:LE_ProcessStep_Type" substitutionGroup="gmd19157:LI_ProcessStep" />
+    <!-- ........................................................................ -->
+    <xs:complexType name="LE_ProcessStep_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="updated19115:LE_ProcessStep" />
+        </xs:sequence>
+        <xs:attributeGroup ref="gco:ObjectReference" />
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    <!-- =========================================================================== -->
+    <!-- ======================= Addition of LE_Source (19115-2) which extends LI_Source ============================================ -->
+    <xs:complexType name="LE_Source_Type">
+        <xs:complexContent>
+            <xs:extension base="gmd19157:LI_Source_Type">
+                <xs:sequence>
+                    <xs:element name="processedLevel" type="gmd:MD_Identifier_PropertyType" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="resolution" type="updated19115:LE_NominalResolution_PropertyType" minOccurs="0" maxOccurs="1" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <!-- ........................................................................ -->
+    <xs:element name="LE_Source" type="updated19115:LE_Source_Type" substitutionGroup="gmd19157:LI_Source" />
+    <!-- ........................................................................ -->
+    <xs:complexType name="LE_Source_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="updated19115:LE_Source" />
+        </xs:sequence>
+        <xs:attributeGroup ref="gco:ObjectReference" />
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    <!-- =========================================================================== -->
+    <!-- ======================= LE_ProcessStepReport: new to 19115-2 ============================================ -->
+    <xs:complexType name="LE_ProcessStepReport_Type">
+        <xs:complexContent>
+            <xs:extension base="gco:AbstractObject_Type">
+                <xs:sequence>
+                    <xs:element name="name" type="gco:CharacterString_PropertyType" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="description" type="gco:CharacterString_PropertyType" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="fileType" type="gco:CharacterString_PropertyType" minOccurs="0" maxOccurs="1" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <!-- ........................................................................ -->
+    <xs:element name="LE_ProcessStepReport" type="updated19115:LE_ProcessStepReport_Type" />
+    <!-- ........................................................................ -->
+    <xs:complexType name="LE_ProcessStepReport_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="updated19115:LE_ProcessStepReport" />
+        </xs:sequence>
+        <xs:attributeGroup ref="gco:ObjectReference" />
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    <!-- ======================= LE_Processing: new to 19115-2 ============================================ -->
+    <xs:complexType name="LE_Processing_Type">
+        <xs:complexContent>
+            <xs:extension base="gco:AbstractObject_Type">
+                <xs:sequence>
+                    <xs:element name="identifier" type="gmd:MD_Identifier_PropertyType" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="softwareReference" type="gmd:CI_Citation_PropertyType" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="procedureDescription" type="gco:CharacterString_PropertyType" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="documentation" type="gmd:CI_Citation_PropertyType" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="runTimeParameters" type="gco:CharacterString_PropertyType" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="algorithm" type="updated19115:LE_Algorithm_PropertyType" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <!-- ........................................................................ -->
+    <xs:element name="LE_Processing" type="updated19115:LE_Processing_Type" />
+    <!-- ........................................................................ -->
+    <xs:complexType name="LE_Processing_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="updated19115:LE_Processing" />
+        </xs:sequence>
+        <xs:attributeGroup ref="gco:ObjectReference" />
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    <!-- ======================= LE_Algorithm: new to 19115-2 ============================================ -->
+    <xs:complexType name="LE_Algorithm_Type">
+        <xs:complexContent>
+            <xs:extension base="gco:AbstractObject_Type">
+                <xs:sequence>
+                    <xs:element name="citation" type="gmd:CI_Citation_PropertyType" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="procedureDescription" type="gco:CharacterString_PropertyType" minOccurs="1" maxOccurs="1" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <!-- ........................................................................ -->
+    <xs:element name="LE_Algorithm" type="updated19115:LE_Algorithm_Type" />
+    <!-- ........................................................................ -->
+    <xs:complexType name="LE_Algorithm_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="updated19115:LE_Algorithm" />
+        </xs:sequence>
+        <xs:attributeGroup ref="gco:ObjectReference" />
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    
+    <!-- ======================= LE_NominalResolution: new to 19115-2 ============================================ -->
+    <xs:complexType name="LE_NominalResolution_Type">
+        <xs:complexContent>
+            <xs:extension base="gco:AbstractObject_Type">
+                <xs:choice>
+                  <xs:element name="groundResolution" type="gmd:CI_Citation_PropertyType" minOccurs="1" maxOccurs="1" />
+                  <xs:element name="scanningResolution" type="gmd:CI_Citation_PropertyType" minOccurs="1" maxOccurs="1" />
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <!-- ........................................................................ -->
+    <xs:element name="LE_NominalResolution" type="updated19115:LE_NominalResolution_Type" />
+    <!-- ........................................................................ -->
+    <xs:complexType name="LE_NominalResolution_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="updated19115:LE_NominalResolution" />
+        </xs:sequence>
+        <xs:attributeGroup ref="gco:ObjectReference" />
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    <!-- =========================================================================== -->
+    
 </xs:schema>

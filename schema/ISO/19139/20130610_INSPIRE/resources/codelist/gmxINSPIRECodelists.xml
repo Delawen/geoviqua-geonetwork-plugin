@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?> 
+<CT_CodelistCatalogue xmlns="http://www.isotc211.org/2005/gmx" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20070417/gmx/gmx.xsd http://www.isotc211.org/2005/gco http://schemas.opengis.net/iso/19139/20070417/gco/gco.xsd http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd">
+  <!--=====Catalogue description=====--> 
+  <name> 
+    <gco:CharacterString>gmxINSPIRECodelists</gco:CharacterString> 
+  </name> 
+  <scope> 
+    <gco:CharacterString>New Codelists for the INSPIRE Spatial Data Services</gco:CharacterString> 
+  </scope> 
+  <fieldOfApplication> 
+    <gco:CharacterString>GMX (and imported) namespace</gco:CharacterString> 
+  </fieldOfApplication> 
+  <versionNumber> 
+    <gco:CharacterString>0.0</gco:CharacterString> 
+  </versionNumber> 
+  <versionDate> 
+    <gco:Date>2013-02-14</gco:Date> 
+  </versionDate> 
+  <codelistItem> 
+    <CodeListDictionary  gml:id="CI_OnLineFunctionCode">
+        <gml:description>function performed by the resource</gml:description>
+		<gml:identifier codeSpace="INSPIRE_SDS">CI_OnLineFunctionCode</gml:identifier>
+      <codeEntry> 
+        <CodeDefinition gml:id="CI_OnLineFunctionCode_accessPoint"> 
+          <gml:description>used to describe an access point of the service</gml:description> 
+          <gml:identifier codeSpace="INSPIRE_SDS">accessPoint</gml:identifier> 
+            </CodeDefinition> 
+      </codeEntry> 
+      <codeEntry> 
+        <CodeDefinition gml:id="CI_OnLineFunctionCode_accessPoint-selfDescribing"> 
+          <gml:description>Used to describe an access point of the service that describes itself in a machine readable format (e.g.  WSDL)</gml:description> 
+          <gml:identifier codeSpace="INSPIRE_SDS">accessPoint-selfDescribing</gml:identifier> 
+        </CodeDefinition> 
+      </codeEntry> 
+      <codeEntry> 
+        <CodeDefinition gml:id="CI_OnLineFunctionCode_provideServiceMetadata"> 
+          <gml:description> Used to specify an address to a document that describe the service metadata (such as GetCapabilities)</gml:description> 
+          <gml:identifier codeSpace="INSPIRE_SDS">provideServiceMetadata</gml:identifier> 
+        </CodeDefinition> 
+      </codeEntry> 
+    </CodeListDictionary> 
+  </codelistItem> 
+</CT_CodelistCatalogue> 

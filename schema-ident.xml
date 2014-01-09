@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://geonetwork-opensource.org/schemas/schema-ident" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://geonetwork-opensource.org/schemas/schema-ident http://geonetwork-opensource.org/schemas/schema-ident/schema-ident.xsd">
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://geonetwork-opensource.org/schemas/schema-ident http://geonetwork-opensource.org/schemas/schema-ident/schema-ident.xsd"
+ xmlns="http://geonetwork-opensource.org/schemas/schema-ident">
 	<name>iso19139.geoviqua</name>
-	<id>1ff44540-b31a-11e2-9e96-0800200c9a66</id>
-	<version>3.1.0</version>
-	<schemaLocation>
-        http://www.geoviqua.org/QualityInformationModel/3.1 http://schemas.geoviqua.org/GVQ/3.1.0/GeoViQua_PQM_UQM.xsd 
-        http://www.uncertml.org/2.0 http://www.uncertml.org/uncertml.xsd
-        http://www.geoviqua.org/19115_updates http://schemas.geoviqua.org/ISO/19139/20120707_GVQ/19115_updates.xsd
-        http://www.geoviqua.org/gmd19157 http://schemas.geoviqua.org/ISO/19157/20120707_GVQ/19157_DataQuality.xsd
-	</schemaLocation>
-	<autodetect xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/3.1">
+	<id>31a56460-7172-11e3-981f-0800200c9a66</id>
+	<version>4.0</version>
+	<depends>iso19139</depends>
+	<!-- Profile XSD location -->
+	<schemaLocation>http://www.geoviqua.org/QualityInformationModel/4.0 http://schemas.geoviqua.org/GVQ/4.0/GeoViQua_PQM_UQM.xsd 
+		http://www.uncertml.org/2.0 http://www.uncertml.org/uncertml.xsd
+		http://www.geoviqua.org/19115_updates http://schemas.geoviqua.org/ISO/19139/20120707_GVQ/19115_updates.xsd
+		http://www.geoviqua.org/gmd19157 http://schemas.geoviqua.org/ISO/19157/20120707_GVQ/19157_DataQuality.xsd</schemaLocation>
+	<autodetect xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0">
 		<elements type="root">
 			<gvq:GVQ_Metadata/>
 		</elements>
 	</autodetect>
+	<readwriteUuid>false</readwriteUuid>
 </schema>

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-    xmlns:gml="http://www.opengis.net/gml" 
-    xmlns:srv="http://www.isotc211.org/2005/srv"
-    xmlns:gco="http://www.isotc211.org/2005/gco" 
-    xmlns:gmd="http://www.isotc211.org/2005/gmd"
-    xmlns:geonet="http://www.fao.org/geonetwork" 
-    xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/3.1" exclude-result-prefixes="gmd srv">
+    xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:srv="http://www.isotc211.org/2005/srv"
+    xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd"
+    xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0"
+    xmlns:geonet="http://www.fao.org/geonetwork" exclude-result-prefixes="gmd srv">
 
 
     <!-- Parameters -->
@@ -21,7 +19,7 @@
     <xsl:param name="gmd-extent"/>
     <xsl:param name="gmd-contentInfo"/>
     <xsl:param name="gmd-distributionInfo"/>
-    <xsl:param name="gmd-dataQualityInfo"/>
+    <xsl:param name="gvq-dataQualityInfo"/>
     <xsl:param name="gmd-portrayalCatalogueInfo"/>
     <xsl:param name="gmd-metadataConstraints"/>
     <xsl:param name="gmd-applicationSchemaInfo"/>
@@ -83,10 +81,7 @@
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
             <!-- Identification -->
             <gmd:identificationInfo>
-                <xsl:for-each select="/root/child/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification|
-	            /root/child/gvq:GVQ_Metadata/gmd:identificationInfo/*[@gco:isoType='gmd:MD_DataIdentification']|
-	            /root/child/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification|
-        		/root/child/gvq:GVQ_Metadata/gmd:identificationInfo/*[@gco:isoType='srv:SV_ServiceIdentification']">
+                <xsl:for-each select="/root/child/gvq:GVQ_Metadata/gmd:identificationInfo/*">
 	            	<xsl:copy>
 	            		<xsl:copy-of select="@*"/>
 		                <xsl:copy-of select="gmd:citation"/>
@@ -170,8 +165,8 @@
             <!-- Quality -->
             
             <xsl:call-template name="process">
-                <xsl:with-param name="update" select="$gmd-dataQualityInfo"/>
-                <xsl:with-param name="name" select="gmd:dataQualityInfo"/>
+                <xsl:with-param name="update" select="$gvq-dataQualityInfo"/>
+                <xsl:with-param name="name" select="gvq:dataQualityInfo"/>
                 <xsl:with-param name="mode" select="$updateMode"/>
             </xsl:call-template>
 
@@ -230,10 +225,7 @@
         <xsl:variable name="childElement">
             <xsl:choose>
                 <xsl:when test="$subLevel=true()">
-                    <xsl:copy-of select="/root/child/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/*[name(.)=name($name)]|
-                    /root/child/gvq:GVQ_Metadata/gmd:identificationInfo/*[@gco:isoType='gmd:MD_DataIdentification']/*[name(.)=name($name)]|
-		            /root/child/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/*[name(.)=name($name)]|
-    	    		/root/child/gvq:GVQ_Metadata/gmd:identificationInfo/*[@gco:isoType='srv:SV_ServiceIdentification']/*[name(.)=name($name)]"/>        
+                    <xsl:copy-of select="/root/child/gvq:GVQ_Metadata/gmd:identificationInfo/*/*[name(.)=name($name)]"/>        
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:copy-of select="/root/child/gvq:GVQ_Metadata/*[name(.)=name($name)]"/>

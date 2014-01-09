@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xsl:stylesheet   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" 
-						xmlns:gco="http://www.isotc211.org/2005/gco"
-						xmlns:geonet="http://www.fao.org/geonetwork" 
-						xmlns:gmd="http://www.isotc211.org/2005/gmd"
-						xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/3.1">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" 
+	xmlns:gco="http://www.isotc211.org/2005/gco"
+	xmlns:geonet="http://www.fao.org/geonetwork" 
+	xmlns:gmd="http://www.isotc211.org/2005/gmd"
+	xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0">
 
 	<!-- ================================================================= -->
 	
 	<xsl:template match="/root">
-		 <xsl:apply-templates select="gvq:GVQ_Metadata"/>
+		<xsl:apply-templates select="gvq:GVQ_Metadata|*[contains(@gco:isoType, 'GVQ_Metadata')]"/>
 	</xsl:template>
 
 	<!-- ================================================================= -->

@@ -10,6 +10,11 @@
 		 in the convert dir of the schema 
 -->
 <conversions>
-	<converter name="xml_iso19139" nsUri="http://www.isotc211.org/2005/gmd" schemaLocation="www.isotc211.org/2005/gmd/gmd.xsd" xslt=""/> <!-- built in -->
-	<converter name="xml_iso19139Tooai_dc" nsUri="http://www.openarchives.org/OAI/2.0/" schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc.xsd" xslt="oai_dc.xsl"/>
+	<!-- GeoViQua specific -->
+	<converter name="xml_geoviqua" nsUri="http://www.geoviqua.org/QualityInformationModel/4.0"
+		schemaLocation="http://schemas.geoviqua.org/GVQ/4.0/GeoViQua_PQM_UQM.xsd" xslt="xml_iso19139.geoviqua.xsl"/>
+	<converter name="xml_geoviqua_to_iso19139" nsUri="http://www.isotc211.org/2005/gmd"
+		schemaLocation="www.isotc211.org/2005/gmd/gmd.xsd" xslt="to19139.xsl"/>
+	<converter name="xml_geoviqua_to_oai_dc" nsUri="http://www.openarchives.org/OAI/2.0/"
+		schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc.xsd" xslt="oai_dc.xsl"/>
 </conversions>

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<xs:schema xmlns:gmd19157="http://www.geoviqua.org/gmd19157" 
+xmlns:updated19115="http://www.geoviqua.org/19115_updates" 
+xmlns:gco="http://www.isotc211.org/2005/gco" 
+xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0" 
+xmlns:gmd="http://www.isotc211.org/2005/gmd" 
+elementFormDefault="qualified" 
+targetNamespace="http://www.geoviqua.org/QualityInformationModel/4.0" 
+xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+version="4.0.0">
+    
+<!-- Online schema locations - ISO, UncertML (if required) and local for GeoViQua -->
+    <xs:import schemaLocation="../../ISO/19139/20070417/gco/gco.xsd" namespace="http://www.isotc211.org/2005/gco" /> 
+    <xs:import schemaLocation="../../ISO/19139/20070417/gmd/citation.xsd" namespace="http://www.isotc211.org/2005/gmd" />
+    <xs:import schemaLocation="../../ISO/19157/20120707_GVQ/19157_DataQuality.xsd" namespace="http://www.geoviqua.org/gmd19157" />
+    <xs:import schemaLocation="../../ISO/19139/20120707_GVQ/19115_updates.xsd" namespace="http://www.geoviqua.org/19115_updates" />
+    
+    <!-- =========================================================================== -->
+    <xs:complexType name="GVQ_DataQuality_Type">
+        <xs:complexContent>
+            <xs:extension base="gmd19157:DQ_DataQuality_Type">
+                <xs:sequence>
+                    <xs:element name="discoveredIssue" type="gvq:GVQ_DiscoveredIssue_PropertyType" minOccurs="1" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <!-- ........................................................................ -->
+    <xs:element name="GVQ_DataQuality" type="gvq:GVQ_DataQuality_Type" substitutionGroup="gmd19157:DQ_DataQuality" />
+    <!-- ........................................................................ -->
+    <xs:complexType name="GVQ_DataQuality_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="gvq:GVQ_DataQuality" />
+        </xs:sequence>
+        <xs:attributeGroup ref="gco:ObjectReference" />
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    <!-- =========================================================================== -->
+    <!-- =========== GeoViQua producer quality elements ============== -->
+    <xs:element name="GVQ_Publication" type="gvq:GVQ_PublicationType" substitutionGroup="gmd:CI_Citation" />
+    <xs:complexType name="GVQ_PublicationType">
+        <xs:complexContent>
+            <xs:extension base="gmd:CI_Citation_Type">
+                <xs:sequence>
+                    <xs:element name="target" type="updated19115:MD_Identifier_PropertyType" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="doi" type="gco:CharacterString_PropertyType" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="volume" type="gco:Integer_PropertyType" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="issue" type="gco:CharacterString_PropertyType" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="pages" type="gco:CharacterString_PropertyType" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="purpose" type="gvq:GVQ_PublicationPurposeCode_PropertyType" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="relatedResource" type="updated19115:MD_Identifier_PropertyType" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="scope" type="gmd19157:DQ_Scope_PropertyType" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="category" type="gvq:GVQ_PublicationCategoryCode_PropertyType" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="onlineResource" type="gmd:CI_OnlineResource_PropertyType" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <!-- ........................................................................ -->
+    <xs:complexType name="GVQ_Publication_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="gvq:GVQ_Publication" />
+        </xs:sequence>
+        <xs:attributeGroup ref="gco:ObjectReference" />
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    <!-- =========================================================================== -->
+    <xs:complexType name="GVQ_DiscoveredIssue_Type">
+        <xs:annotation>
+            <xs:documentation>A convenience class for collecting summary information about known
+problems with the dataset</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="target" type="updated19115:MD_Identifier_PropertyType" minOccurs="1" maxOccurs="1" />
+            <xs:element name="knownProblem" type="gco:CharacterString_PropertyType" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Known issue with this dataset</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="workAround" type="gco:CharacterString_PropertyType" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Possible way to work around the problem</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="alternativeDataset" type="gmd:MD_DataIdentification_PropertyType" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>A dataset identifier that already solved the issue</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="referenceDoc" type="gvq:GVQ_Publication_PropertyType" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>A publication or report which documents the problem</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="fixedResource" type="gmd:MD_DataIdentification_PropertyType" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>A dataset identifier that already solved the issue</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="expectedFix" type="gmd:CI_Date_PropertyType" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Projected date for a solution</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- ........................................................................ -->
+    <xs:element name="GVQ_DiscoveredIssue" type="gvq:GVQ_DiscoveredIssue_Type" />
+    <!-- ........................................................................ -->
+    <xs:complexType name="GVQ_DiscoveredIssue_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="gvq:GVQ_DiscoveredIssue" />
+        </xs:sequence>
+        <xs:attributeGroup ref="gco:ObjectReference" />
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    
+    <!-- ================== Elements using GVQ code lists for producer model =========================== -->
+    <!-- ........................................................................ -->
+    <xs:element name="GVQ_PublicationCategoryCode" type="gco:CodeListValue_Type" substitutionGroup="gco:CharacterString" />
+    <!-- ........................................................................ -->
+    <xs:complexType name="GVQ_PublicationCategoryCode_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="gvq:GVQ_PublicationCategoryCode" />
+        </xs:sequence>
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    <!-- =========================================================================== -->
+    <!-- ........................................................................ -->
+    <xs:element name="GVQ_PublicationPurposeCode" type="gco:CodeListValue_Type" substitutionGroup="gco:CharacterString" />
+    <!-- ........................................................................ -->
+    <xs:complexType name="GVQ_PublicationPurposeCode_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="gvq:GVQ_PublicationPurposeCode" />
+        </xs:sequence>
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    <!-- =========================================================================== -->
+    <!-- ================== Elements using GVQ code lists for feedback model =========================== -->
+    <!-- ........................................................................ -->
+    <xs:element name="GVQ_ReportAspectCode" type="gco:CodeListValue_Type" substitutionGroup="gco:CharacterString" />
+    <!-- ........................................................................ -->
+    <xs:complexType name="GVQ_ReportAspectCode_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="gvq:GVQ_ReportAspectCode" />
+        </xs:sequence>
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    <!-- =========================================================================== -->
+    <!-- ........................................................................ -->
+    <xs:element name="GVQ_UserRoleCode" type="gco:CodeListValue_Type" substitutionGroup="gco:CharacterString" />
+    <!-- ........................................................................ -->
+    <xs:complexType name="GVQ_UserRoleCode_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="gvq:GVQ_UserRoleCode" />
+        </xs:sequence>
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    <!-- =========================================================================== -->
+    <!-- ........................................................................ -->
+    <xs:element name="MD_ScopeCode" type="gco:CodeListValue_Type" substitutionGroup="gco:CharacterString" />
+    <!-- ........................................................................ -->
+    <xs:complexType name="MD_ScopeCode_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="gvq:MD_ScopeCode" />
+        </xs:sequence>
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    <!-- =========================================================================== -->
+    <!-- =========== New metaquality extension: traceability ============== -->
+    <!-- =========================================================================== -->
+    <xs:element name="GVQ_Traceability" type="gvq:GVQ_Traceability_Type" substitutionGroup="gmd19157:DQ_Metaquality"/>
+    <xs:complexType name="GVQ_Traceability_Type">
+        <xs:complexContent>
+            <xs:extension base="gmd19157:DQ_Metaquality_Type">
+                <xs:sequence>
+                    <xs:element name="trace" type="gmd19157:LI_Lineage_PropertyType" minOccurs="0" maxOccurs="1" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <!-- ........................................................................ -->
+    <xs:complexType name="GVQ_Traceability_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="gvq:GVQ_Traceability" />
+        </xs:sequence>
+        <xs:attributeGroup ref="gco:ObjectReference" />
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    <!-- GVQ versions of DQ_evaluation elements, which allow each to reference a 'referenceDataset' -->
+    <xs:element name="GVQ_FullInspection" type="gvq:GVQ_FullInspectionType" substitutionGroup="gmd19157:AbstractDQ_DataEvaluation" />
+    <xs:complexType name="GVQ_FullInspectionType">
+        <xs:complexContent>
+            <xs:extension base="gmd19157:DQ_FullInspectionType">
+                <xs:sequence>
+                    <xs:element name="referenceDataset" type="updated19115:MD_AssociatedResource_PropertyType" minOccurs="0" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GVQ_FullInspection_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="gvq:GVQ_FullInspection" />
+        </xs:sequence>
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    <xs:element name="GVQ_SampleBasedInspection" type="gvq:GVQ_SampleBasedInspectionType" substitutionGroup="gmd19157:AbstractDQ_DataEvaluation" />
+    <xs:complexType name="GVQ_SampleBasedInspectionType">
+        <xs:complexContent>
+            <xs:extension base="gmd19157:DQ_SampleBasedInspectionType">
+                <xs:sequence>
+                    <xs:element name="referenceDataset" type="updated19115:MD_AssociatedResource_PropertyType" minOccurs="0" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GVQ_SampleBasedInspection_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="gvq:GVQ_SampleBasedInspection" />
+        </xs:sequence>
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+    <xs:element name="GVQ_IndirectEvaluation" type="gvq:GVQ_IndirectEvaluationType" substitutionGroup="gmd19157:AbstractDQ_DataEvaluation" />
+    <xs:complexType name="GVQ_IndirectEvaluationType">
+        <xs:complexContent>
+            <xs:extension base="gmd19157:DQ_IndirectEvaluationType">
+                <xs:sequence>
+                    <xs:element name="referenceDataset" type="updated19115:MD_AssociatedResource_PropertyType" minOccurs="0" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GVQ_IndirectEvaluation_PropertyType">
+        <xs:sequence minOccurs="0">
+            <xs:element ref="gvq:GVQ_IndirectEvaluation" />
+        </xs:sequence>
+        <xs:attributeGroup ref="gco:ObjectReference" />
+        <xs:attribute ref="gco:nilReason" />
+    </xs:complexType>
+</xs:schema>

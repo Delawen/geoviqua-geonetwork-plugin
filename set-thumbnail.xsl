@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xsl:stylesheet   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" 
-						xmlns:gco="http://www.isotc211.org/2005/gco"
-						xmlns:srv="http://www.isotc211.org/2005/srv"
-						xmlns:gmd="http://www.isotc211.org/2005/gmd"
-						xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/3.1">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" 
+	xmlns:gco="http://www.isotc211.org/2005/gco"
+	xmlns:srv="http://www.isotc211.org/2005/srv"
+	xmlns:gmd="http://www.isotc211.org/2005/gmd"
+	xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0">
 
 	<!-- ================================================================= -->
 	
 	<xsl:template match="/root">
-		 <xsl:apply-templates select="gvq:GVQ_Metadata"/>
+		<xsl:apply-templates select="gvq:GVQ_Metadata|*[contains(@gco:isoType, 'GVQ_Metadata')]"/>
 	</xsl:template>
 
 	<!-- ================================================================= -->
 	
-	<xsl:template match="gvq:GVQ_Metadata">
+	<xsl:template match="gvq:GVQ_Metadata|*[contains(@gco:isoType, 'GVQ_Metadata')]">
 		<xsl:copy>
+			<xsl:copy-of select="@*"/>
 			<xsl:apply-templates select="gmd:fileIdentifier"/>
 			<xsl:apply-templates select="gmd:language"/>
 			<xsl:apply-templates select="gmd:characterSet"/>
@@ -35,9 +36,9 @@
 			<xsl:choose>
 				<xsl:when test="not(gmd:identificationInfo)">
 		 			<gmd:identificationInfo>
-						<gmd:MD_DataIdentification>
+						<gvq:GVQ_DataIdentification>
 							<xsl:call-template name="fill"/>
-						</gmd:MD_DataIdentification>
+						</gvq:GVQ_DataIdentification>
 					</gmd:identificationInfo>
 				</xsl:when>
 				<xsl:otherwise>
@@ -47,7 +48,7 @@
 			
 			<xsl:apply-templates select="gmd:contentInfo"/>
 			<xsl:apply-templates select="gmd:distributionInfo"/>
-			<xsl:apply-templates select="gmd:dataQualityInfo"/>
+			<xsl:apply-templates select="gvq:dataQualityInfo"/>
 			<xsl:apply-templates select="gmd:portrayalCatalogueInfo"/>
 			<xsl:apply-templates select="gmd:metadataConstraints"/>
 			<xsl:apply-templates select="gmd:applicationSchemaInfo"/>
@@ -57,12 +58,14 @@
 			<xsl:apply-templates select="gmd:propertyType"/>
 			<xsl:apply-templates select="gmd:featureType"/>
 			<xsl:apply-templates select="gmd:featureAttribute"/>
+
+			<!-- TODO: add missing GeoViQua PQM & UQM elements -->
 		</xsl:copy>
 	</xsl:template>
 
 	<!-- ================================================================= -->
 	
-	<xsl:template match="gmd:MD_DataIdentification|*[@gco:isoType='gmd:MD_DataIdentification']">
+	<xsl:template match="gvq:GVQ_DataIdentification|*[contains(@gco:isoType, 'GVQ_DataIdentification')]">
 		<xsl:copy>
 			<xsl:copy-of select="@*"/>
 			<xsl:apply-templates select="gmd:citation"/>
@@ -89,10 +92,14 @@
 			<xsl:apply-templates select="gmd:environmentDescription"/>
 			<xsl:apply-templates select="gmd:extent"/>
 			<xsl:apply-templates select="gmd:supplementalInformation"/>
+
+			<!-- TODO: add missing GeoViQua elements -->
+			
+			<xsl:copy-of select="*[namespace-uri()!='http://www.isotc211.org/2005/gmd']"/>
 		</xsl:copy>
 	</xsl:template>
 	
-	<xsl:template match="srv:SV_ServiceIdentification|*[@gco:isoType='srv:SV_ServiceIdentification']">
+	<xsl:template match="srv:SV_ServiceIdentification|*[contains(@gco:isoType, 'SV_ServiceIdentification')]">
 		<xsl:copy>
 			<xsl:copy-of select="@*"/>
 			<xsl:apply-templates select="gmd:citation"/>
@@ -111,7 +118,10 @@
 			<xsl:apply-templates select="gmd:resourceSpecificUsage"/>
 			<xsl:apply-templates select="gmd:resourceConstraints"/>
 			<xsl:apply-templates select="gmd:aggregationInfo"/>
+			
 			<xsl:apply-templates select="srv:*"/>
+			
+			<xsl:copy-of select="*[namespace-uri()!='http://www.isotc211.org/2005/gmd' and namespace-uri()!='http://www.isotc211.org/2005/srv']"/>
 		</xsl:copy>
 	</xsl:template>
 	
@@ -122,7 +132,7 @@
 		<gmd:graphicOverview>
 			<gmd:MD_BrowseGraphic>
 				<gmd:fileName>
-					<xsl:variable name="metadataId"   select="/root/gvq:GVQ_Metadata/gmd:fileIdentifier/gco:CharacterString/text()" />
+					<xsl:variable name="metadataId"   select="/root/*/gmd:fileIdentifier/gco:CharacterString/text()" />
 					<xsl:variable name="serverHost"   select="/root/env/host" />
 					<xsl:variable name="serverPort"   select="/root/env/port" />
 					<xsl:variable name="baseUrl"   select="/root/env/baseUrl" />
