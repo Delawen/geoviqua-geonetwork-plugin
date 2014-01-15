@@ -324,8 +324,15 @@
 		<xsl:param name="embedded"/>
 
 		<xsl:variable name="dataset" select="gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue='dataset' or normalize-space(gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue)=''"/>
+		<xsl:variable name="code"><xsl:value-of select="gmd:identificationInfo//updated19115:MD_Identifier/gmd:code/gco:CharacterString" /></xsl:variable>
+		<xsl:variable name="codespace"><xsl:value-of select="gmd:identificationInfo//updated19115:MD_Identifier/updated19115:codeSpace/gco:CharacterString" /></xsl:variable>
 
 		<!-- header -->
+		<tr>
+			<td valign="middle" colspan="2" class="padded-content" style="text-align: right;">
+				<a href="https://geoviqua.stcorp.nl/submit_feedback.html?target_code={$code}&amp;target_codespace={$codespace}" target="_blank">Submit feedback</a>
+			</td>
+		</tr>
 		<tr>
 			<td valign="middle" colspan="2">
 				<xsl:if test="$currTab='metadata' or $currTab='identification' or /root/gui/config/metadata-tab/*[name(.)=$currTab]/@flat">
