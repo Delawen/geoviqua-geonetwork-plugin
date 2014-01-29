@@ -324,8 +324,15 @@
 		<xsl:param name="embedded"/>
 
 		<xsl:variable name="dataset" select="gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue='dataset' or normalize-space(gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue)=''"/>
+		<xsl:variable name="code"><xsl:value-of select="gmd:identificationInfo//updated19115:MD_Identifier/gmd:code/gco:CharacterString" /></xsl:variable>
+		<xsl:variable name="codespace"><xsl:value-of select="gmd:identificationInfo//updated19115:MD_Identifier/updated19115:codeSpace/gco:CharacterString" /></xsl:variable>
 
 		<!-- header -->
+		<tr>
+			<td valign="middle" colspan="2" class="padded-content" style="text-align: right;">
+				<a href="https://geoviqua.stcorp.nl/submit_feedback.html?target_code={$code}&amp;target_codespace={$codespace}" target="_blank">Submit feedback</a>
+			</td>
+		</tr>
 		<tr>
 			<td valign="middle" colspan="2">
 				<xsl:if test="$currTab='metadata' or $currTab='identification' or /root/gui/config/metadata-tab/*[name(.)=$currTab]/@flat">
@@ -336,6 +343,8 @@
 							<xsl:variable name="geonet_id"><xsl:value-of select="geonet:info/id" /></xsl:variable>
 							<xsl:variable name="geonet_uuid"><xsl:value-of select="geonet:info/uuid" /></xsl:variable>
 							<input name="xhr_metadata" id="xhr_metadata" type="hidden" value="{$serialized_xml}"/>
+							<input name="xhr_code" id="xhr_code" type="hidden" value="{$code}"/>
+							<input name="xhr_codespace" id="xhr_codespace" type="hidden" value="{$codespace}"/>
 							<input name="xhr_id" id="xhr_id" type="hidden" value="{$geonet_id}_{$geonet_uuid}"/>
 						</div>
 						<xsl:call-template name="iso19139.geoviqua-javascript"/>
@@ -612,7 +621,10 @@
 		function requestGEOlabel() {
 
 			var xhr = createCORSRequest('POST', 'http://tutorial.geoviqua.org/geolabel.php?cors'),
-				params = "metadata=" + encodeURIComponent(document.getElementById('xhr_metadata').value) + "&size=150";
+				params = "metadata=" + encodeURIComponent(document.getElementById('xhr_metadata').value) +
+						 "&code=" + encodeURIComponent(document.getElementById('xhr_code').value) +
+						 "&codespace=" + encodeURIComponent(document.getElementById('xhr_codespace').value) +
+						 "&size=150";
 
 			if (!xhr) {
 				container.innerHTML = "No GEO label available (your browser is not HTML5 compatible)";
