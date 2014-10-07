@@ -268,7 +268,7 @@
   <xsl:template mode="mode-iso19139.geoviqua" priority="200" match="*[*/@codeList]">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
-    <xsl:param name="codelists" select="$iso19139.geoviquacodelists" required="no"/>
+    <xsl:param name="codelists" select="$iso19139codelists" required="no"/>
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
@@ -307,7 +307,7 @@
   <xsl:template mode="mode-iso19139.geoviqua" match="*[gn:element/gn:text]">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
-    <xsl:param name="codelists" select="$iso19139.geoviquacodelists" required="no"/>
+    <xsl:param name="codelists" select="$iso19139codelists" required="no"/>
 
     <xsl:call-template name="render-element">
       <xsl:with-param name="label"

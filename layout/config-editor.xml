@@ -79,7 +79,7 @@
 
 
   <fieldsWithFieldset>
-    <name>gmd:MD_Metadata</name>
+    <name>gvq:GVQ_Metadata</name>
     <name>gmd:identificationInfo</name>
     <name>gmd:distributionInfo</name>
     <name>gmd:portrayalCatalogueInfo</name>
@@ -189,20 +189,20 @@
       <tab id="inspire" default="true" mode="flat">
         <section name="resource">
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"/>
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"/>
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:abstract"
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:abstract"
+            if="count(gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:abstract"
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:abstract"
+            if="count(gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
 
-          <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevel"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:hierarchyLevel"/>
 
           <action type="add"
-                  if="count(gmd:MD_Metadata/gmd:hierarchyLevel) = 0"
+                  if="count(gvq:GVQ_Metadata/gmd:hierarchyLevel) = 0"
                   name="hierarchyLevel" or="hierarchyLevel"
-                  in="/gmd:MD_Metadata">
+                  in="/gvq:GVQ_Metadata">
             <template>
               <snippet>
                 <gmd:hierarchyLevel>
@@ -215,18 +215,18 @@
           </action>
 
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType"/>
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType"/>
 
 
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
             gmd:descriptiveKeywords
             [gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'INSPIRE Service taxonomy']"> </field>
           <!-- FIXME: MUST be provided in template and thesaurus available in the catalog, to be displayed properly -->
 
 
           <field name="url" templateModeOnly="true" notDisplayedIfMissing="true"
-            xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions
+            xpath="/gvq:GVQ_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions
             /gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:linkage"
             del="../..">
             <template> 
@@ -242,7 +242,7 @@
           </field>
 
           <action type="add" name="url" or="onLine"
-            in="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions">
+            in="/gvq:GVQ_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions">
             <template>
               <snippet>
                 <gmd:onLine>
@@ -259,9 +259,9 @@
           <!-- Resource identifier for dataset, service
           and add action to compute it if not defined. -->
           <field name="identifier" templateModeOnly="true" notDisplayedIfMissing="true"
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier"
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier"
             del="."
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+            if="count(gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
             <template>
               <values>
                 <key label="code"
@@ -281,9 +281,9 @@
             </template>
           </field>
           <field name="identifier" templateModeOnly="true"
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier"
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier"
             del="."
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+            if="count(gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
             <template>
               <values>
                 <key label="code"
@@ -303,7 +303,7 @@
           </field>
 
           <action type="add" name="identifier" or="identifier"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation">
+                  in="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation">
             <template>
               <snippet>
                 <gmd:identifier>
@@ -318,14 +318,14 @@
           </action>
 
           <action type="batch" process="add-resource-id" params=""
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/
-            gmd:identifier[ends-with(gmd:MD_Identifier/gmd:code/gco:CharacterString, //gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString)]) = 0"/>
+                  if="count(gvq:GVQ_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/
+            gmd:identifier[ends-with(gmd:MD_Identifier/gmd:code/gco:CharacterString, //gvq:GVQ_Metadata/gmd:fileIdentifier/gco:CharacterString)]) = 0"/>
 
 
 
 
           <field name="encoding" templateModeOnly="true" notDisplayedIfMissing="true"
-            xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat"
+            xpath="/gvq:GVQ_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat"
             del=".">
             <template>
               <values>
@@ -356,7 +356,7 @@
           </field>
 
           <action type="add" name="encoding" or="distributionFormat"
-            in="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution">
+            in="/gvq:GVQ_Metadata/gmd:distributionInfo/gmd:MD_Distribution">
             <template>
               <snippet>
                 <gmd:distributionFormat>
@@ -374,32 +374,32 @@
           </action>
 
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
             gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:type/gmd:MD_KeywordTypeCode/@codeListValue='theme'
             and not(gmd:thesaurusName)]/gmd:keyword"
             or="keyword"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
+            in="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
             gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:type/gmd:MD_KeywordTypeCode/@codeListValue='theme'
             and not(gmd:thesaurusName)]"/>
 
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
             gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[not(../gmd:thesaurusName)]"
             or="keyword"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
+            in="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
             gmd:descriptiveKeywords/gmd:MD_Keywords[not(gmd:thesaurusName)]"/>
 
           <!-- INSPIRE Themes -->
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/*/
             gmd:descriptiveKeywords
             [contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'INSPIRE themes')]"/>
           <!-- FIXME: MUST be provided in template and thesaurus available in the catalog, to be displayed properly -->
           <action type="add"
                   name="inspireTheme"
                   or="descriptiveKeywords"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/*"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/
+                  in="/gvq:GVQ_Metadata/gmd:identificationInfo/*"
+                  if="count(gvq:GVQ_Metadata/gmd:identificationInfo/*/
                         gmd:descriptiveKeywords[
                           contains(gmd:MD_Keywords/gmd:thesaurusName/
                                       gmd:CI_Citation/gmd:title/gco:CharacterString,
@@ -448,15 +448,15 @@
 
           <section name="bboxesSection">
             <field
-              xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
+              xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
               srv:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
             <field
-              xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
+              xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
               gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
           </section>
 
           <action type="add" name="extent" or="extent"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+            in="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
             <template>
               <snippet>
                 <gmd:extent>
@@ -487,7 +487,7 @@
           </action>
 
           <action type="add" name="extent" or="extent"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification">
+            in="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification">
             <template>
               <snippet>
                 <srv:extent>
@@ -515,7 +515,7 @@
           </action>
 
           <field name="rsIdentifier" templateModeOnly="true"
-            xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"
+            xpath="/gvq:GVQ_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"
             del="../..">
             <template>
               <values>
@@ -541,7 +541,7 @@
 
 
           <action type="add" name="rsIdentifier" addDirective="data-gn-crs-selector"
-            or="referenceSystemInfo" in="/gmd:MD_Metadata">
+            or="referenceSystemInfo" in="/gvq:GVQ_Metadata">
             <template>
               <snippet>
                 <gmd:referenceSystemInfo>
@@ -565,16 +565,16 @@
           <section name="referenceDate">
 
             <field name="creationDate" templateModeOnly="true"
-              xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/
+              xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/
               gmd:date[gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue = 'creation']"
-              if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"
+              if="count(gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"
               del=".">
               <template>
                 <values>
                   <key label="date"
                        xpath="gmd:CI_Date/gmd:date/*"
                        use="gn-date-picker"
-                       tooltip="gmd:date||/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date"/>
+                       tooltip="gmd:date||/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date"/>
                 </values>
                 <snippet>
                   <gmd:date>
@@ -592,15 +592,15 @@
             </field>
 
             <field name="creationDate" templateModeOnly="true"
-              xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/
+              xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/
               gmd:date[gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue = 'creation']"
-              if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+              if="count(gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
               <template>
                 <values>
                   <key label="date"
                        xpath="gmd:CI_Date/gmd:date/*"
                        use="gn-date-picker"
-                       tooltip="gmd:date||/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date"/>
+                       tooltip="gmd:date||/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date"/>
                 </values>
                 <snippet>
                   <gmd:date>
@@ -618,15 +618,15 @@
             </field>
 
             <field name="publicationDate" templateModeOnly="true"
-              xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/
+              xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/
               gmd:date[gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue = 'publication']"
-              if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+              if="count(gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
               <template>
                 <values>
                   <key label="date"
                        xpath="gmd:CI_Date/gmd:date/*"
                        use="gn-date-picker"
-                       tooltip="gmd:date||/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date"/>
+                       tooltip="gmd:date||/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date"/>
                 </values>
                 <snippet>
                   <gmd:date>
@@ -643,15 +643,15 @@
               </template>
             </field>
             <field name="publicationDate" templateModeOnly="true"
-              xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/
+              xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/
               gmd:date[gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue = 'publication']"
-              if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+              if="count(gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
               <template>
                 <values>
                   <key label="date"
                        xpath="gmd:CI_Date/gmd:date/*"
                        use="gn-date-picker"
-                       tooltip="gmd:date||/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date"/>
+                       tooltip="gmd:date||/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date"/>
                 </values>
                 <snippet>
                   <gmd:date>
@@ -669,14 +669,14 @@
             </field>
 
             <field name="revisionDate" templateModeOnly="true"
-              xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date[gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue = 'revision']"
-              if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+              xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date[gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue = 'revision']"
+              if="count(gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
               <template>
                 <values>
                   <key label="date"
                        xpath="gmd:CI_Date/gmd:date/*"
                        use="gn-date-picker"
-                       tooltip="gmd:date||/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date"/>
+                       tooltip="gmd:date||/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date"/>
                 </values>
                 <snippet>
                   <gmd:date>
@@ -693,15 +693,15 @@
               </template>
             </field>
             <field name="revisionDate" templateModeOnly="true"
-              xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/
+              xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/
               gmd:date[gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue = 'revision']"
-              if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+              if="count(gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
               <template>
                 <values>
                   <key label="date"
                        xpath="gmd:CI_Date/gmd:date/*"
                        use="gn-date-picker"
-                       tooltip="gmd:date||/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date"/>
+                       tooltip="gmd:date||/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date"/>
                 </values>
                 <snippet>
                   <gmd:date>
@@ -721,8 +721,8 @@
 
 
           <field name="temporalRangeSection" templateModeOnly="true"
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement"
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement"
+            if="count(gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
             <template>
               <values>
                 <!-- -Need a * for gml:TimePeriodTypeCHOICE_ELEMENT2 added by editor enumerated tree -->
@@ -758,8 +758,8 @@
           </field>
 
           <field name="temporalRangeSection" templateModeOnly="true"
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement"
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement"
+            if="count(gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
             <template>
               <values>
                 <key label="beginPosition"
@@ -791,10 +791,10 @@
           </field>
 
           <field name="lineage"
-            xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement"/>
+            xpath="/gvq:GVQ_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement"/>
 
           <action type="add" name="lineage" or="statement"
-                  in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage">
+                  in="/gvq:GVQ_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage">
             <template>
               <snippet>
                 <gmd:statement>
@@ -804,7 +804,7 @@
             </template>
           </action>
           <action type="add" name="lineage" or="lineage"
-                  in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
+                  in="/gvq:GVQ_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
             <template>
               <snippet>
                 <gmd:lineage>
@@ -818,17 +818,17 @@
             </template>
           </action>
           <!--<field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution"
-            or="spatialResolution" in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution"
+            or="spatialResolution" in="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
           </field>-->
           <field
-              xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution[gmd:MD_Resolution/gmd:equivalentScale]"/>
+              xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution[gmd:MD_Resolution/gmd:equivalentScale]"/>
 
           <action type="add"
                   name="spatialResolution"
                   forceLabel="true"
                   or="spatialResolution"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+                  in="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
             <template>
               <snippet>
                 <gmd:spatialResolution>
@@ -847,11 +847,11 @@
           </action>
 
           <field
-              xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution[gmd:MD_Resolution/gmd:distance]"/>
+              xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution[gmd:MD_Resolution/gmd:distance]"/>
           <action type="add"
                   name="spatialDistance"
                   forceLabel="true"
-                  or="spatialResolution" in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+                  or="spatialResolution" in="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
             <template>
               <snippet>
                 <gmd:spatialResolution>
@@ -867,7 +867,7 @@
 
           <field name="conformity" templateModeOnly="true"
                  isMissingLabel="notEvaluated"
-            xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result"
+            xpath="/gvq:GVQ_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result"
             del="../..">
             <template>
               <values>
@@ -875,7 +875,7 @@
                   xpath="gmd:DQ_ConformanceResult/
                   gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString"
                   tooltip="gmd:pass">
-                  <helper name="gmd:title" context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title"></helper>
+                  <helper name="gmd:title" context="/gvq:GVQ_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title"></helper>
                 </key>
                 <key label="conformity_date"
                   xpath="gmd:DQ_ConformanceResult/
@@ -937,7 +937,7 @@
 
 
           <!--<action type="add" name="conformity" or="report"
-            in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
+            in="/gvq:GVQ_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
             <template>
               <snippet>
                 <gmd:report>
@@ -982,12 +982,12 @@
 
           <field
               name="useLimitation"
-              xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
+              xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
                 gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation"
-              if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
+              if="count(gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
           <action type="add" name="useLimitation" or="resourceConstraints"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+            in="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
+            if="count(gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
             <template>
               <snippet>
                 <gmd:resourceConstraints>
@@ -1003,12 +1003,12 @@
 
           <field
               name="useLimitation"
-              xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
+              xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
                 gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation"
-              if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
+              if="count(gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
           <action type="add" name="useLimitation" or="resourceConstraints"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+            in="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
+            if="count(gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
             <template>
               <snippet>
                 <gmd:resourceConstraints>
@@ -1027,13 +1027,13 @@
 
 
           <field name="accessConstraints"
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
             gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints"
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
+            if="count(gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
 
           <action type="add" name="accessConstraints" or="resourceConstraints"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+            in="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
+            if="count(gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
             <template>
               <snippet>
                 <gmd:resourceConstraints>
@@ -1055,13 +1055,13 @@
 
 
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
             gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints"
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
+            if="count(gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
 
           <action type="add" name="accessConstraints" or="resourceConstraints"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+            in="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
+            if="count(gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
             <template>
               <snippet>
                 <gmd:resourceConstraints>
@@ -1085,13 +1085,13 @@
 
 
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:characterSet"> </field>
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:characterSet"> </field>
 
 
           <field name="pointOfContact" templateModeOnly="true" notDisplayedIfMissing="true"
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact"
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact"
             del="."
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+            if="count(gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
             <template>
               <values readonlyIf="count(@xlink:href) > 0">
                 <key label="organisationName"
@@ -1147,13 +1147,13 @@
 
           <action type="add" name="pointOfContact" addDirective="data-gn-directory-entry-selector"
             or="pointOfContact"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"> </action>
+            in="/gvq:GVQ_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"> </action>
 
 
           <field name="pointOfContact" templateModeOnly="true" notDisplayedIfMissing="true"
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact"
+            xpath="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact"
             del="."
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+            if="count(gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
             <template>
               <values readonlyIf="count(@xlink:href) > 0">
                 <key label="organisationName"
@@ -1209,7 +1209,7 @@
 
           <action type="add" name="pointOfContact" addDirective="data-gn-directory-entry-selector"
             or="pointOfContact"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"> </action>
+            in="/gvq:GVQ_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"> </action>
 
         </section>
 
@@ -1217,7 +1217,7 @@
 
           <field name="metadataPointOfContact" templateModeOnly="true"
             notDisplayedIfMissing="true"
-            xpath="/gmd:MD_Metadata/gmd:contact" del=".">
+            xpath="/gvq:GVQ_Metadata/gmd:contact" del=".">
             <template>
               <values readonlyIf="count(@xlink:href) > 0">
                 <key label="organisationName"
@@ -1272,39 +1272,39 @@
 
 
           <action type="add" name="metadataPointOfContact"
-            addDirective="data-gn-directory-entry-selector" or="contact" in="/gmd:MD_Metadata"/>
+            addDirective="data-gn-directory-entry-selector" or="contact" in="/gvq:GVQ_Metadata"/>
 
 
-          <field xpath="/gmd:MD_Metadata/gmd:dateStamp"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:dateStamp"/>
         </section>
       </tab>
     </view>
     <view name="default">
       <tab id="default" default="true" mode="flat">
-        <section xpath="/gmd:MD_Metadata/gmd:identificationInfo"/>
-        <section xpath="/gmd:MD_Metadata/gmd:distributionInfo"/>
-        <section xpath="/gmd:MD_Metadata/gmd:dataQualityInfo"/>
-        <section name="gmd:MD_Metadata">
-          <field xpath="/gmd:MD_Metadata/gmd:fileIdentifier"/>
-          <field xpath="/gmd:MD_Metadata/gmd:language" or="language" in="/gmd:MD_Metadata"/>
-          <field xpath="/gmd:MD_Metadata/gmd:characterSet"/>
-          <field xpath="/gmd:MD_Metadata/gmd:parentIdentifier" or="parentIdentifier"
-                 in="/gmd:MD_Metadata"/>
-          <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevel" or="hierarchyLevel"
-                 in="/gmd:MD_Metadata"/>
-          <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevelName" or="hierarchyLevelName"
-                 in="/gmd:MD_Metadata"/>
-          <field xpath="/gmd:MD_Metadata/gmd:dateStamp"/>
-          <field xpath="/gmd:MD_Metadata/gmd:metadataStandardName"/>
-          <field xpath="/gmd:MD_Metadata/gmd:metadataStandardVersion"/>
-          <field xpath="/gmd:MD_Metadata/gmd:contact" or="contact" in="/gmd:MD_Metadata"/>
-          <field xpath="/gmd:MD_Metadata/gmd:dataSetURI" or="dataSetURI" in="/gmd:MD_Metadata"/>
-          <field xpath="/gmd:MD_Metadata/gmd:locale" or="locale" in="/gmd:MD_Metadata"/>
-          <field xpath="/gmd:MD_Metadata/gmd:series"/>
-          <field xpath="/gmd:MD_Metadata/gmd:describes"/>
-          <field xpath="/gmd:MD_Metadata/gmd:propertyType"/>
-          <field xpath="/gmd:MD_Metadata/gmd:featureType"/>
-          <field xpath="/gmd:MD_Metadata/gmd:featureAttribute"/>
+        <section xpath="/gvq:GVQ_Metadata/gmd:identificationInfo"/>
+        <section xpath="/gvq:GVQ_Metadata/gmd:distributionInfo"/>
+        <section xpath="/gvq:GVQ_Metadata/gmd:dataQualityInfo"/>
+        <section name="gvq:GVQ_Metadata">
+          <field xpath="/gvq:GVQ_Metadata/gmd:fileIdentifier"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:language" or="language" in="/gvq:GVQ_Metadata"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:characterSet"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:parentIdentifier" or="parentIdentifier"
+                 in="/gvq:GVQ_Metadata"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:hierarchyLevel" or="hierarchyLevel"
+                 in="/gvq:GVQ_Metadata"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:hierarchyLevelName" or="hierarchyLevelName"
+                 in="/gvq:GVQ_Metadata"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:dateStamp"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:metadataStandardName"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:metadataStandardVersion"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:contact" or="contact" in="/gvq:GVQ_Metadata"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:dataSetURI" or="dataSetURI" in="/gvq:GVQ_Metadata"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:locale" or="locale" in="/gvq:GVQ_Metadata"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:series"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:describes"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:propertyType"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:featureType"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:featureAttribute"/>
         </section>
       </tab>
       
@@ -1315,67 +1315,67 @@
     </view>
     <view name="advanced">
       <tab id="identificationInfo" default="true">
-        <section xpath="/gmd:MD_Metadata/gmd:identificationInfo" or="identificationInfo"
-                 in="/gmd:MD_Metadata"/>
+        <section xpath="/gvq:GVQ_Metadata/gmd:identificationInfo" or="identificationInfo"
+                 in="/gvq:GVQ_Metadata"/>
       </tab>
       <tab id="distributionInfo">
-        <section xpath="/gmd:MD_Metadata/gmd:distributionInfo" or="distributionInfo"
-                 in="/gmd:MD_Metadata"/>
+        <section xpath="/gvq:GVQ_Metadata/gmd:distributionInfo" or="distributionInfo"
+                 in="/gvq:GVQ_Metadata"/>
       </tab>
       <tab id="dataQualityInfo">
-        <section xpath="/gmd:MD_Metadata/gmd:dataQualityInfo" or="dataQualityInfo"
-                 in="/gmd:MD_Metadata"/>
+        <section xpath="/gvq:GVQ_Metadata/gmd:dataQualityInfo" or="dataQualityInfo"
+                 in="/gvq:GVQ_Metadata"/>
       </tab>
       <tab id="spatialRepresentationInfo">
-        <section xpath="/gmd:MD_Metadata/gmd:spatialRepresentationInfo"
-                 or="spatialRepresentationInfo" in="/gmd:MD_Metadata"/>
+        <section xpath="/gvq:GVQ_Metadata/gmd:spatialRepresentationInfo"
+                 or="spatialRepresentationInfo" in="/gvq:GVQ_Metadata"/>
       </tab>
       <tab id="referenceSystemInfo">
-        <section xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo" or="referenceSystemInfo"
-                 in="/gmd:MD_Metadata"/>
+        <section xpath="/gvq:GVQ_Metadata/gmd:referenceSystemInfo" or="referenceSystemInfo"
+                 in="/gvq:GVQ_Metadata"/>
       </tab>
       <tab id="contentInfo" toggle="true">
-        <section xpath="/gmd:MD_Metadata/gmd:contentInfo" or="contentInfo" in="/gmd:MD_Metadata"/>
+        <section xpath="/gvq:GVQ_Metadata/gmd:contentInfo" or="contentInfo" in="/gvq:GVQ_Metadata"/>
       </tab>
       <tab id="portrayalCatalogueInfo" toggle="true">
-        <section xpath="/gmd:MD_Metadata/gmd:portrayalCatalogueInfo" or="portrayalCatalogueInfo"
-                 in="/gmd:MD_Metadata"/>
+        <section xpath="/gvq:GVQ_Metadata/gmd:portrayalCatalogueInfo" or="portrayalCatalogueInfo"
+                 in="/gvq:GVQ_Metadata"/>
       </tab>
       <tab id="metadata">
-        <section name="gmd:MD_Metadata">
-          <field xpath="/gmd:MD_Metadata/gmd:fileIdentifier"/>
-          <field xpath="/gmd:MD_Metadata/gmd:language" or="language" in="/gmd:MD_Metadata"/>
-          <field xpath="/gmd:MD_Metadata/gmd:characterSet"/>
-          <field xpath="/gmd:MD_Metadata/gmd:parentIdentifier" or="parentIdentifier"
-                 in="/gmd:MD_Metadata"/>
-          <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevel" or="hierarchyLevel"
-                 in="/gmd:MD_Metadata"/>
-          <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevelName" or="hierarchyLevelName"
-                 in="/gmd:MD_Metadata"/>
-          <field xpath="/gmd:MD_Metadata/gmd:dateStamp"/>
-          <field xpath="/gmd:MD_Metadata/gmd:metadataStandardName"/>
-          <field xpath="/gmd:MD_Metadata/gmd:metadataStandardVersion"/>
-          <field xpath="/gmd:MD_Metadata/gmd:contact" or="contact" in="/gmd:MD_Metadata"/>
-          <field xpath="/gmd:MD_Metadata/gmd:dataSetURI" or="dataSetURI" in="/gmd:MD_Metadata"/>
-          <field xpath="/gmd:MD_Metadata/gmd:locale" or="locale" in="/gmd:MD_Metadata"/>
-          <field xpath="/gmd:MD_Metadata/gmd:series"/>
-          <field xpath="/gmd:MD_Metadata/gmd:describes"/>
-          <field xpath="/gmd:MD_Metadata/gmd:propertyType"/>
-          <field xpath="/gmd:MD_Metadata/gmd:featureType"/>
-          <field xpath="/gmd:MD_Metadata/gmd:featureAttribute"/>
+        <section name="gvq:GVQ_Metadata">
+          <field xpath="/gvq:GVQ_Metadata/gmd:fileIdentifier"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:language" or="language" in="/gvq:GVQ_Metadata"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:characterSet"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:parentIdentifier" or="parentIdentifier"
+                 in="/gvq:GVQ_Metadata"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:hierarchyLevel" or="hierarchyLevel"
+                 in="/gvq:GVQ_Metadata"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:hierarchyLevelName" or="hierarchyLevelName"
+                 in="/gvq:GVQ_Metadata"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:dateStamp"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:metadataStandardName"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:metadataStandardVersion"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:contact" or="contact" in="/gvq:GVQ_Metadata"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:dataSetURI" or="dataSetURI" in="/gvq:GVQ_Metadata"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:locale" or="locale" in="/gvq:GVQ_Metadata"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:series"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:describes"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:propertyType"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:featureType"/>
+          <field xpath="/gvq:GVQ_Metadata/gmd:featureAttribute"/>
         </section>
       </tab>
       <tab id="metadataConstraints" toggle="true">
-        <section xpath="/gmd:MD_Metadata/gmd:metadataConstraints" or="metadataConstraints"
-                 in="/gmd:MD_Metadata"/>
+        <section xpath="/gvq:GVQ_Metadata/gmd:metadataConstraints" or="metadataConstraints"
+                 in="/gvq:GVQ_Metadata"/>
       </tab>
       <tab id="metadataMaintenance" toggle="true">
-        <section xpath="/gmd:MD_Metadata/gmd:metadataMaintenance" or="metadataMaintenance"
-                 in="/gmd:MD_Metadata"/>
+        <section xpath="/gvq:GVQ_Metadata/gmd:metadataMaintenance" or="metadataMaintenance"
+                 in="/gvq:GVQ_Metadata"/>
       </tab>
       <tab id="applicationSchemaInfo" toggle="true">
-        <section xpath="/gmd:MD_Metadata/gmd:applicationSchemaInfo" or="applicationSchemaInfo"
-                 in="/gmd:MD_Metadata"/>
+        <section xpath="/gvq:GVQ_Metadata/gmd:applicationSchemaInfo" or="applicationSchemaInfo"
+                 in="/gvq:GVQ_Metadata"/>
       </tab>
     </view>
     <view name="xml">
