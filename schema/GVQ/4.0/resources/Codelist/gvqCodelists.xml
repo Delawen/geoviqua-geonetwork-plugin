@@ -230,7 +230,7 @@ http://www.isotc211.org/2005/gco http://schemas.opengis.net/iso/19139/20070417/g
 				</gmx:CodeDefinition>
 			</gmx:codeEntry>
             <!--  Codes already defined in the normal gmx codelists -->
-            <!--
+            
             <gmx:codeEntry>
 				<gmx:CodeDefinition gml:id="MD_ScopeCode_activity">
 					<gml:description>information applies to an activity, project or program</gml:description>
@@ -247,6 +247,12 @@ http://www.isotc211.org/2005/gco http://schemas.opengis.net/iso/19139/20070417/g
 				<gmx:CodeDefinition gml:id="MD_ScopeCode_attributeType">
 					<gml:description>information applies to the characteristic of a feature</gml:description>
 					<gml:identifier codeSpace="GeoViQua">attributeType</gml:identifier>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="MD_ScopeCode_propertyType">
+					<gml:description>information applies to a WMC / OWS Context</gml:description>
+					<gml:identifier codeSpace="GeoViQua">context</gml:identifier>
 				</gmx:CodeDefinition>
 			</gmx:codeEntry>
 			<gmx:codeEntry>
@@ -299,6 +305,12 @@ http://www.isotc211.org/2005/gco http://schemas.opengis.net/iso/19139/20070417/g
 			</gmx:codeEntry>
 			<gmx:codeEntry>
 				<gmx:CodeDefinition gml:id="MD_ScopeCode_propertyType">
+					<gml:description>information applies to a project</gml:description>
+					<gml:identifier codeSpace="GeoViQua">project</gml:identifier>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="MD_ScopeCode_propertyType">
 					<gml:description>information applies to a property type</gml:description>
 					<gml:identifier codeSpace="GeoViQua">propertyType</gml:identifier>
 				</gmx:CodeDefinition>
@@ -322,6 +334,12 @@ http://www.isotc211.org/2005/gco http://schemas.opengis.net/iso/19139/20070417/g
 				</gmx:CodeDefinition>
 			</gmx:codeEntry>
 			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="MD_ScopeCode_propertyType">
+					<gml:description>information applies to a survey</gml:description>
+					<gml:identifier codeSpace="GeoViQua">survey</gml:identifier>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
 				<gmx:CodeDefinition gml:id="MD_ScopeCode_model">
 					<gml:description>information applies to a copy or imitation of an existing or hypothetical object</gml:description>
 					<gml:identifier codeSpace="GeoViQua">model</gml:identifier>
@@ -333,7 +351,7 @@ http://www.isotc211.org/2005/gco http://schemas.opengis.net/iso/19139/20070417/g
 					<gml:identifier codeSpace="GeoViQua">tile</gml:identifier>
 				</gmx:CodeDefinition>
 			</gmx:codeEntry>
-            -->
+            
 		</gmx:CodeListDictionary>
 	</gmx:codelistItem>
 	<!--=== EOF ===-->
